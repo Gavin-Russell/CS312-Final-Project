@@ -4,7 +4,9 @@ Repository for the final project of cs312
 # Team:
 
 Jacob Olson is an ACS Major who is interested in AI.
+
 Gavin Russel is a CS Major who __
+
 Ian Dennis is a CS/ME Major who ___
 
 # Project Idea Summary
