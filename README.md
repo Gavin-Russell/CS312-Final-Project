@@ -17,7 +17,7 @@ Email: ggr32@nau.edu
 Profile: [Gavin Russell](https://github.com/Gavin-Russell)
 
 
-Ian Dennis is a CS/ME Major who ___
+Ian Dennis is a CS/ME Major who is currently most interested in back end web development.
 
 Email: ind9@nau.edu
 
