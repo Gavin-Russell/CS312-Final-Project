@@ -10,5 +10,7 @@ Our CS 312 project needed to meet a certain set of requirements. Specifically, i
 
 ## Project Plan
 In order to ensure our project is successfully completed we will begin development on the front end of the website before we have reached the NodeJS portion of the course content. Specifically we will lay out a template look and feel for using the front end of the webpage. The other primary milestones to complete before server side development has been initiated is to create a component that will render a blog post and a component to intake a new blog post from a user. Intaking a new blog post from a user will be its own separate post but the rest will be a single page site.
+
 Completing the first three objectives mentioned above by the end of Week 6 will allow us to focus on the server. Our primary focus will turn to storing blog posts on the server and removing them at appropriate time intervals. We will also implement a component in React that can get a list of posts from the server and implement each one using the single post component made previously. The component that intakes new blog posts will also need to be updated to store the input information on the server.
+
 We anticipate the second half of development will be completed during Week 9 of the course. This will leave the last week free for debugging and building/rehearsing for our final presentation.
