@@ -5,7 +5,7 @@ Repository for the final project of cs312
 
 Jacob Olson is an ACS Major who is interested in AI.
 
-Gavin Russel is a CS Major who __
+Gavin Russell is a CS Major who is very interested in learning more about the CS world. 
 
 Ian Dennis is a CS/ME Major who ___
 
