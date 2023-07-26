@@ -73,6 +73,14 @@ class MainPage extends Component {
 
       var response = await SignUp(signupElement.state)
 
+      if (response.data.message === "User successfully added") {
+        //redirect, login, and cookies
+        cookies.set('token', signupElement.state.userName)
+        this.setState({
+          token: signupElement.state.userName
+        })
+      }
+      
       //display the message
       window.alert(response.data.message)
 
