@@ -17,13 +17,19 @@ class MainPage extends Component {
       this.loginRef = React.createRef();
       this.signupRef = React.createRef();
       this.state = {
-        token: cookies.get('token') || null,
+        token: "check", //cookies.get('token') || null,
         
         // <LoginPage ref={this.loginRef} handleLogin={this.handleLogin}></LoginPage>
         // <SignUpPage ref={this.signupRef} handleSignUp={this.handleSignUp}></SignUpPage>
         pageContent: <BlogPostList></BlogPostList>,
       }
     }
+
+  updatePageContent = (content) => {
+    this.setState({
+      pageContent: content
+    })
+  }
 
 
   handleLogin = async (event) => {
@@ -71,7 +77,7 @@ class MainPage extends Component {
     }
 
     //also username cannot be null
-    if( signupElement.state.userName === "null" ) {
+    else if( signupElement.state.userName === "null" ) {
       window.alert("Username cannot be 'null'")
     }
 
@@ -103,7 +109,7 @@ class MainPage extends Component {
 
     return (
       <div>
-        <NavBar></NavBar>
+        <NavBar token={this.state.token} updatePageContent={this.updatePageContent}></NavBar>
         <> {this.state.pageContent} </>
       </div>
     )

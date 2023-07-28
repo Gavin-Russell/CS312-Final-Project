@@ -5,7 +5,7 @@ import cors from "cors"
 
 //initialize the database address an PORT number
 const clientAddress = "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.1"
-let PORT = 3001
+let PORT = 3002
 
 
 //create expresss app
