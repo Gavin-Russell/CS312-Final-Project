@@ -34,7 +34,7 @@ app.post("/signUp", async function (request, response) {
     //otherwise there was a problem
 
     //send error response
-    response.status(404).send({
+    response.status(502).send({
       message: `There was an error connecting to the database. ERROR:    ${error}`,
     });
 
@@ -71,7 +71,7 @@ app.post("/signUp", async function (request, response) {
     //otherwise the username is taken
 
     //otherwise return error of username
-    response.status(200).send({ message: "The username is already taken" });
+    response.status(400).send({ message: "The username is already taken" });
 
     //close the connection
     client.close();
