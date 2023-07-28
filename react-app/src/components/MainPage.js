@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Cookies } from 'react-cookie';
-import NavBar from './NavBar';
 import LoginPage from './LoginPage';
-import SignUpPage from './SignUpPage';
-import ProfilePage from './ProfilePage';
-import BlogPostList from './BlogPostList';
-import { SignUp } from './Requests';
-import LogIn from './Requests';
+import SignUpPage from './SignUpPage'
+import { SignUp } from './Requests'
+import LogIn from './Requests'
 
 const cookies = new Cookies()
 class MainPage extends Component {
@@ -17,19 +14,9 @@ class MainPage extends Component {
       this.loginRef = React.createRef();
       this.signupRef = React.createRef();
       this.state = {
-        token: "check", //cookies.get('token') || null,
-        
-        // <LoginPage ref={this.loginRef} handleLogin={this.handleLogin}></LoginPage>
-        // <SignUpPage ref={this.signupRef} handleSignUp={this.handleSignUp}></SignUpPage>
-        pageContent: <BlogPostList></BlogPostList>,
+        token: cookies.get('token') || null
       }
     }
-
-  updatePageContent = (content) => {
-    this.setState({
-      pageContent: content
-    })
-  }
 
 
   handleLogin = async (event) => {
@@ -46,20 +33,25 @@ class MainPage extends Component {
     //otherwise it will attempt to log in
     else{
 
-      var response = await LogIn(loginElement.state)
-
-      //display the message
-      window.alert(response.data.message)
-
-      //if successful request
-      if( response.data.message === "Successfully logged in!") {
+      LogIn(loginElement.state).then( res => { 
+        //on successful login
+        
+        //display success message
+        window.alert(res.data.message)
 
         //redirect, login, and cookies
         cookies.set('token', loginElement.state.userName)
         this.setState({
           token: loginElement.state.userName
         })
-      }
+
+      }).catch ( res => { 
+        //on unsucessful login
+
+        //display error message
+        window.alert(res.response.data.message)
+
+      })
     }
   }
 
@@ -78,29 +70,33 @@ class MainPage extends Component {
 
     //also username cannot be null
     else if( signupElement.state.userName === "null" ) {
-      window.alert("Username cannot be 'null'")
+      window.alert("That username is not valid")
     }
 
     //otherwise it will attempt to sign up
     else{
 
-      var response = await SignUp(signupElement.state)
+      SignUp(signupElement.state).then( res => {
 
-      if (response.data.message === "User successfully added") {
+        //on succesful sign up
+
+        //display the success message
+        window.alert(res.data.message)
+
         //redirect, login, and cookies
         cookies.set('token', signupElement.state.userName)
         this.setState({
           token: signupElement.state.userName
         })
-      }
-      
-      //display the message
-      window.alert(response.data.message)
 
-      //if successful request
-      if( response.data.status === 200) {
-        //redirect, login, and cookies
-      }
+      }).catch ( res => {
+
+        //on unsuccesful sign up
+
+        //display the error message
+        window.alert(res.response.data.message)
+
+      })
     }
   }
 
@@ -109,8 +105,9 @@ class MainPage extends Component {
 
     return (
       <div>
-        <NavBar token={this.state.token} updatePageContent={this.updatePageContent}></NavBar>
-        <> {this.state.pageContent} </>
+        <LoginPage ref={this.loginRef} handleLogin={this.handleLogin}></LoginPage>
+        <SignUpPage ref={this.signupRef} handleSignUp={this.handleSignUp}></SignUpPage>
+        <div>{this.state.token}</div>
       </div>
     )
   }
