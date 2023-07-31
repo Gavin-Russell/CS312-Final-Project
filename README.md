@@ -1,6 +1,31 @@
 # CS312-Final-Project
 Repository for the final project of cs312
 
+# Installation and Running
+
+## Starting the server
+
+To run the server file, express, mongodb and cors need to be installed
+
+### Download Mongodb: https://www.mongodb.com/try/download/community
+
+For the other packages cd to './Node Server Files' on the command line and run the following:
+
+### `npm install cors`
+### `npm install express`
+### `node server.js`
+
+The final command will run the server on port 3001 on your local computer
+
+## Starting the React Website
+
+To run the React server React will need to be installed. On the command line cd to './reach-app' and run:
+
+### 'npm install react'
+### 'npm start'
+
+The React server will try to run on port 3000 and will fallback to another port if it is taken. It is advisable to run the React server after the Node server so that port 3001 will never be taken away from the Node server.
+
 # Team
 
 Jacob Olson is an ACS Major who is interested in AI.
