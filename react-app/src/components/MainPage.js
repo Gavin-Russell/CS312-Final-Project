@@ -63,7 +63,7 @@ class MainPage extends Component {
         cookies.set('token', loginElement.state.userName)
         this.setState({
           token: loginElement.state.userName,
-		      pageContent: <BlogPostList></BlogPostList>
+	  pageContent: <BlogPostList></BlogPostList>
         })
 
       }).catch ( res => { 
