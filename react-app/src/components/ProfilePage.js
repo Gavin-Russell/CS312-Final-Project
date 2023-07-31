@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import ProfileNavBar from './ProfileNavBar.js'
+import NewBlogPost from './NewBlogPost.js';
+import { Cookies } from "react-cookie";
 
 export class ProfilePage extends Component {
 
@@ -7,14 +9,22 @@ export class ProfilePage extends Component {
     super(props)
 
     this.state = {
-      pageContent: <ProfileNavBar></ProfileNavBar>
+      pageContent: <NewBlogPost></NewBlogPost>
     }
   }
-  
+
+  updatePageContent = (content) => {
+    this.setState({
+      pageContent: content
+    })
+  }
+
+
   render() {
     return (
       <div>
-        <ProfileNavBar></ProfileNavBar>
+        <ProfileNavBar updatePageContent={this.updatePageContent}></ProfileNavBar>
+        {this.state.pageContent}
 
       </div>
     )

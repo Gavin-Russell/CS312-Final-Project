@@ -33,7 +33,7 @@ export class ProfileNavBar extends Component {
         <div>
             <h1>Profile</h1>
             <button onClick={this.handleEditProfile}>Edit Profile</button>
-            <button onClikc={this.handleEditComments}>Comment History</button>
+            <button onClick={this.handleEditComments}>Comment History</button>
             <button onClick={this.handleBlogPosts}>Blog Post History</button>
             <button onClick={this.handleNewBlogPost}>New Blog Post</button>
         </div>
