@@ -19,7 +19,7 @@ The final command will run the server on port 3001 on your local computer
 
 ## Starting the React Website
 
-To run the React server React will need to be installed. On the command line cd to './reach-app' and run:
+To run the React server React will need to be installed. On the command line cd to './react-app' and run:
 
 ### `npm install react`
 ### `npm start`
