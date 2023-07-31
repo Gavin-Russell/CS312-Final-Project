@@ -13,8 +13,8 @@ class MainPage extends Component {
     this.loginRef = React.createRef();
     this.signupRef = React.createRef();
     this.state = {
-      token: cookies.get('token') || null //"test"
-      pageContent: <BlogPostList></BlogPostList>,
+      token: cookies.get('token') || null, //"test"
+      pageContent: <BlogPostList></BlogPostList>
     }
   }
 
@@ -52,22 +52,27 @@ class MainPage extends Component {
 
     //otherwise it will attempt to log in
     else {
-      var response = await LogIn(loginElement.state);
+      
+      LogIn(loginElement.state).then( res => { 
+        //on successful login
+        
+        //display success message
+        window.alert(res.data.message)
 
-      //display the message
-      window.alert(response.data.message);
-
-      //if successful request
-      if (response.data.message === "Successfully logged in!") {
         //redirect, login, and cookies
-        cookies.set("token", loginElement.state.userName);
+        cookies.set('token', loginElement.state.userName)
         this.setState({
           token: loginElement.state.userName,
-          pageContent: <BlogPostList></BlogPostList>
-        });
+		      pageContent: <BlogPostList></BlogPostList>
+        })
 
-        console.log("Logged in")
-      }
+      }).catch ( res => { 
+        //on unsucessful login
+
+        //display error message
+        window.alert(res.response.data.message)
+
+      })
     }
   };
 
@@ -89,31 +94,34 @@ class MainPage extends Component {
 
     //also username cannot be null
     else if( signupElement.state.userName === "null" ) {
-      window.alert("Username cannot be 'null'")
+      window.alert("That username is not valid")
     }
 
     //otherwise it will attempt to sign up
     else {
-      var response = await SignUp(signupElement.state);
+      
+      SignUp(signupElement.state).then( res => {
 
-      if (response.data.message === "User successfully added") {
+        //on succesful sign up
+
+        //display the success message
+        window.alert(res.data.message)
+
         //redirect, login, and cookies
-        cookies.set("token", signupElement.state.userName);
+        cookies.set('token', signupElement.state.userName)
         this.setState({
           token: signupElement.state.userName,
-          pageContent: <BlogPostList></BlogPostList>
-        });
+		  pageContent: <BlogPostList></BlogPostList>
+        })
 
-        console.log("Signed up")
-      }
+      }).catch ( res => {
+        //on unsuccesful sign up
 
-      //display the message
-      window.alert(response.data.message);
-
-      //if successful request
-      if (response.data.status === 200) {
-        //redirect, login, and cookies
-      }
+        //display the error message
+        window.alert(res.response.data.message)
+        
+      })
+      
     }
   };
 
