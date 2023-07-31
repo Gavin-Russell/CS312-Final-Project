@@ -12,6 +12,7 @@ To run the server file, express, mongodb and cors need to be installed
 For the other packages cd to './Node Server Files' on the command line and run the following:
 
 ### `npm install cors`
+### `npm install mongo`
 ### `npm install express`
 ### `node server.js`
 
