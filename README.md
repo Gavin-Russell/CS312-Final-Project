@@ -132,6 +132,9 @@ The login and signup portions were successfully and completely implemented in th
 ## Frontend Implementation Work
 Implementation of the front end of the site revolved around completely setting up the website navigation, including distinguishing what navigation is available when a user is logged in or browsing as a guest. This was accomplished by using the cookies implemented during the login/signup portion of the site’s backend development (discussed above). If the user is logged in and navigates to their profile they will also be given access to a sub-navigation bar for viewing and editing their profile, previous comments, and previous posts (shown below). They can also choose to create a new post from their profile page.
 
+## Screenshot 3
+<img title="Screenshot 1" alt="Screenshot 1" src="/images/Screenshot 3.png">
+
 Along with navigation each component that can be navigated to/interacted with by the user has been created and skeletal content has been added. The skeletal content is used for demonstrative purposes for the moment and will be replaced during Phase II development. All of the components have also been given CSS styling to allow for a better web page viewing experience, though it is far from professional quality.
 
 
