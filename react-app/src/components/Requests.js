@@ -10,10 +10,30 @@ export function SignUp(newUser) {
 
 export function getAllPosts() {
   const dummyData = [
-    { title: "title 1", user: "user 1", topic: "topic 1", text: "text 1" },
-    { title: "title 2", user: "user 2", topic: "topic 2", text: "text 2" },
-    { title: "title 3", user: "user 3", topic: "topic 3", text: "text 3" },
-    { title: "title 4", user: "user 4", topic: "topic 4", text: "text 4" },
+    {
+      title: "title 1",
+      user: "user 1",
+      topic: "topic 1",
+      text: "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah ",
+    },
+    {
+      title: "title 2",
+      user: "user 2",
+      topic: "topic 2",
+      text: "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah ",
+    },
+    {
+      title: "title 3",
+      user: "user 3",
+      topic: "topic 3",
+      text: "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah ",
+    },
+    {
+      title: "title 4",
+      user: "user 4",
+      topic: "topic 4",
+      text: "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah ",
+    },
   ];
   return dummyData;
 }
