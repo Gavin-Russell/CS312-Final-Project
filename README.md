@@ -3,7 +3,7 @@ Repository for the final project of cs312
 
 # Installation and Running
 
-## Starting the server
+## Starting the Node Server
 
 To run the server file, express, mongodb and cors need to be installed
 
