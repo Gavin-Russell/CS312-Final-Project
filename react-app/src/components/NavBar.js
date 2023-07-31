@@ -29,14 +29,14 @@ export class NavBar extends Component {
 
   handleLogin = (event) => {
     event.preventDefault()
-    this.props.updatePageContent(<LoginPage handleLogin={this.handleLogin}></LoginPage>)
+    this.props.updatePageContent(<LoginPage ref={this.props.loginRef} handleLogin={this.props.handleLogin}></LoginPage>)
     
     // console.log("Login")
   }
 
   handleSignUp = (event) => {
     event.preventDefault()
-    this.props.updatePageContent(<SignUpPage ref={this.signupRef} handleSignUp={this.handleSignUp}></SignUpPage>)
+    this.props.updatePageContent(<SignUpPage ref={this.props.signupRef} handleSignUp={this.props.handleSignUp}></SignUpPage>)
 
     // console.log("Sign Up")
   }

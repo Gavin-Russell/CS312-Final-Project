@@ -63,7 +63,7 @@ class MainPage extends Component {
         cookies.set('token', loginElement.state.userName)
         this.setState({
           token: loginElement.state.userName,
-	  pageContent: <BlogPostList></BlogPostList>
+	        pageContent: <BlogPostList></BlogPostList>
         })
 
       }).catch ( res => { 
@@ -111,7 +111,7 @@ class MainPage extends Component {
         cookies.set('token', signupElement.state.userName)
         this.setState({
           token: signupElement.state.userName,
-		  pageContent: <BlogPostList></BlogPostList>
+		      pageContent: <BlogPostList></BlogPostList>
         })
 
       }).catch ( res => {
@@ -130,7 +130,11 @@ class MainPage extends Component {
       <div>
         <NavBar token={this.state.token} 
                 updatePageContent={this.updatePageContent}
-                updateToken={this.updatePageContent}></NavBar>
+                updateToken={this.updatePageContent}
+                loginRef={this.loginRef}
+                signupRef={this.signupRef}
+                handleSignUp={this.handleSignUp}
+                handleLogin={this.handleLogin}></NavBar>
         <> {this.state.pageContent} </>
       </div>
     );
