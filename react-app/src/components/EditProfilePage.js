@@ -18,11 +18,6 @@ export class EditProfilePage extends Component {
         <h2>Edit Profile</h2>
         <form>
             <div>
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username"></input>
-            </div>
-
-            <div>
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password"></input>
             </div>
