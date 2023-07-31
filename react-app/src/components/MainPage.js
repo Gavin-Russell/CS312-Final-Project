@@ -13,10 +13,7 @@ class MainPage extends Component {
     this.loginRef = React.createRef();
     this.signupRef = React.createRef();
     this.state = {
-      token: "test", // cookies.get('token') || null,
-      
-      // <LoginPage ref={this.loginRef} handleLogin={this.handleLogin}></LoginPage>
-      // <SignUpPage ref={this.signupRef} handleSignUp={this.handleSignUp}></SignUpPage>
+      token: cookies.get('token') || null //"test"
       pageContent: <BlogPostList></BlogPostList>,
     }
   }
