@@ -5,7 +5,7 @@ import cors from "cors"
 
 //initialize the database address an PORT number
 const clientAddress = "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.1"
-let PORT = 3002
+let PORT = 3001
 
 
 //create expresss app
@@ -18,23 +18,23 @@ app.use(cors())
 app.post('/signUp', async function(request, response) {
 	
 	//initialize variables
-	var client, userDB, db, databaseList, isTaken = false
+	var client, profileList, profilesCollection, isTaken = false
 
-	try { //try to 
+	try { 
+		//try to 
 	
 		//connect to client		
 		client = new mongo.MongoClient(clientAddress);
 		//connect to admin database to start
-		db = await client.db("admin")
-		//get list of all databases returns and object, databases need to be pulled
-		databaseList = await db.admin().listDatabases()
+		profilesCollection = await client.db("Users").collection("profiles")
 		
 		
-	} catch(error) { //otherwise there was a problem
+	} catch(error) { 
+		//otherwise there was a problem
 		
 		//send error response
 		response
-			.status(404)
+			.status(502)
 			.send( {message: `There was an error connecting to the database. ERROR:    ${error}`} )	
 		
 		//close the connection
@@ -43,26 +43,24 @@ app.post('/signUp', async function(request, response) {
 		//end the function early
 		return false
 	}
-	
-	//console.log(request.body.userName)
-	//console.log(databaseList.databases.indexOf( request.body.userName ))
-	//console.log(databaseList.databases[0].name)
-	
-	for( var i=0; i < databaseList.databases.length; i++ ) {
+
+
+	//create the list of all user profiles
+	profileList = await profilesCollection.find().toArray()
+
+	//loop through all posts to see if the username already exists
+	for( var i=0; i < await profilesCollection.countDocuments(); i++ ) {
 		
-		if( databaseList.databases[i].name === request.body.userName ) {
+		if( profileList[i].userName === request.body.userName ) {
 			isTaken = true;
 		}
 	}
 	
 	//if the username is not taken (the database with that username does not exist )
 	if( !isTaken ) {
-		
-		//add the user database to mongo
-		userDB = await client.db( request.body.userName )
-		
+
 		//create the user profile collection
-		await userDB.collection("profile").insertOne({
+		await profilesCollection.insertOne({
 				"firstName": request.body.firstName,
 				"lastName": request.body.lastName,
 				"userName": request.body.userName,		
@@ -74,7 +72,7 @@ app.post('/signUp', async function(request, response) {
 		
 		//otherwise return error of username
 		response
-			.status(200)
+			.status(400)
 			.send( {message: "The username is already taken"} )	
 	
 		//close the connection
@@ -102,23 +100,23 @@ app.post('/signUp', async function(request, response) {
 app.post('/logIn', async function( request, response ) {
 
 	//initialize variables
-	var client, userDB, db, databaseList, userExists = false, userProfile
+	var client, profileList, profilesCollection, userExists = false, userProfile
 
-	try { //try to 
+	try {
+		//try to 
 	
 		//connect to client		
 		client = new mongo.MongoClient(clientAddress);
 		//connect to admin database to start
-		db = await client.db("admin")
-		//get list of all databases returns and object, databases need to be pulled
-		databaseList = await db.admin().listDatabases()
+		profilesCollection = await client.db("Users").collection("profiles")
 		
 		
-	} catch(error) { //otherwise there was a problem
+	} catch(error) { 
+		//otherwise there was a problem
 		
 		//send error response
 		response
-			.status(200)
+			.status(502)
 			.send( {message: `There was an error connecting to the database. ERROR:    ${error}`} )	
 		
 		//close the connection
@@ -128,21 +126,25 @@ app.post('/logIn', async function( request, response ) {
 		return false
 	}
 
-	//loop through all databases and see if the username exists
-	for( var i=0; i < databaseList.databases.length; i++ ) {
+
+	//create the list of all user profiles
+	profileList = await profilesCollection.find().toArray()
+
+	//loop through all posts to see if the username already exists
+	for( var i=0; i < await profilesCollection.countDocuments(); i++ ) {
 		
-		if( databaseList.databases[i].name === request.body.userName ) {
-			userExists = true
+		if( profileList[i].userName === request.body.userName ) {
+			userExists = true;
 		}
 	}
 	
 	//if there is an account/database with that username
 	if( userExists ) {
 		
-		userProfile = await client.db( request.body.userName ).collection("profile")
+		userProfile = await profilesCollection.find({userName:request.body.userName}).toArray()
 		
 		//if password matches the account password
-		if( await userProfile.countDocuments({password:request.body.password}) === 1 ) {
+		if( await userProfile[0].password === request.body.password) {
 			
 			//return success
 			response
@@ -159,7 +161,7 @@ app.post('/logIn', async function( request, response ) {
 		
 			//return password incorrect
 			response
-				.status(200)
+				.status(400)
 				.send( {message: "The password entered is not correct"} )
 				
 			//close the connection
@@ -174,7 +176,7 @@ app.post('/logIn', async function( request, response ) {
 	
 		//return username incorrect
 		response
-			.status(200)
+			.status(400)
 			.send( {message: "There is no account with that username"} )
 		
 		//close the connection
