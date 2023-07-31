@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { Cookies } from "react-cookie";
 import NavBar from "./NavBar";
-import LoginPage from "./LoginPage";
-import SignUpPage from "./SignUpPage";
-import ProfilePage from "./ProfilePage";
 import BlogPostList from "./BlogPostList";
 import { SignUp } from "./Requests";
 import LogIn from "./Requests";
@@ -16,12 +13,30 @@ class MainPage extends Component {
     this.loginRef = React.createRef();
     this.signupRef = React.createRef();
     this.state = {
-      token: cookies.get("token") || null,
-
+      token: "test", // cookies.get('token') || null,
+      
       // <LoginPage ref={this.loginRef} handleLogin={this.handleLogin}></LoginPage>
       // <SignUpPage ref={this.signupRef} handleSignUp={this.handleSignUp}></SignUpPage>
-      //pageContent: <BlogPostList></BlogPostList>,
-    };
+      pageContent: <BlogPostList></BlogPostList>,
+    }
+  }
+
+  updatePageContent = (content) => {
+    this.setState({
+      pageContent: content
+    })
+  }
+
+  updateToken = (token) => {
+    this.setState({
+      token: token
+    })
+
+    cookies.set("token", token)
+
+    console.log("Token: " + this.state.token)
+
+    localStorage.clear()
   }
 
   handleLogin = async (event) => {
@@ -51,7 +66,10 @@ class MainPage extends Component {
         cookies.set("token", loginElement.state.userName);
         this.setState({
           token: loginElement.state.userName,
+          pageContent: <BlogPostList></BlogPostList>
         });
+
+        console.log("Logged in")
       }
     }
   };
@@ -73,8 +91,8 @@ class MainPage extends Component {
     }
 
     //also username cannot be null
-    if (signupElement.state.userName === "null") {
-      window.alert("Username cannot be 'null'");
+    else if( signupElement.state.userName === "null" ) {
+      window.alert("Username cannot be 'null'")
     }
 
     //otherwise it will attempt to sign up
@@ -86,7 +104,10 @@ class MainPage extends Component {
         cookies.set("token", signupElement.state.userName);
         this.setState({
           token: signupElement.state.userName,
+          pageContent: <BlogPostList></BlogPostList>
         });
+
+        console.log("Signed up")
       }
 
       //display the message
@@ -102,9 +123,10 @@ class MainPage extends Component {
   render() {
     return (
       <div>
-        <NavBar></NavBar>
-        {/* <> {this.state.pageContent} </> */}
-        <BlogPostList />
+        <NavBar token={this.state.token} 
+                updatePageContent={this.updatePageContent}
+                updateToken={this.updatePageContent}></NavBar>
+        <> {this.state.pageContent} </>
       </div>
     );
   }
