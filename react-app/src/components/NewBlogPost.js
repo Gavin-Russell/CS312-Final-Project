@@ -1,35 +1,75 @@
 import React, { Component } from 'react'
+import { Cookies } from 'react-cookie'
+import { addBlogPost } from "./Requests";
 
+const cookies = new Cookies();
 export class NewBlogPost extends Component {
     
     constructor(props) {
         super(props)
 
         this.state = {
+            userName: cookies.get('token'),
             title: "",
-            content: "",
-            image1: "",
-            image2: "",
-            image3: "",
+            description: "",
+            tag: ""
+            // image1: "",
+            // image2: "",
+            // image3: "",
         }
+    }
+
+    handleChange = (event) => {
+      this.setState({ [event.target.name]: event.target.value } )
+    }
+
+    handleSubmit = async (event) => {
+      event.preventDefault();
+
+      addBlogPost(this.state).then( res => {
+
+        //on succesful sign up
+
+        //display the success message
+        window.alert(res.data.message)
+
+      }).catch ( res => {
+        //on unsuccesful sign up
+
+        //display the error message
+        window.alert("There was an error adding the post")
+        
+      })
+
     }
 
   render() {
     return (
       <div>
         <h2>New Blog Post</h2>
-        <form>
+        <form onSubmit={this.handleSubmit}>
             <div>
                 <label for="title">Title</label>
-                <input type="text" id="title" name="title" value={this.state.title}></input>
+                <input type="text" id="title" name="title" value={this.state.title} onChange={this.handleChange}></input>
             </div>
 
             <div>
                 <label for="content">Content</label>
-                <textarea id="content" name="content" value={this.state.content}></textarea>
+                <textarea id="description" name="description" value={this.state.content} onChange={this.handleChange}></textarea>
             </div>
 
             <div>
+            <label htmlFor="tag">Tag:</label>
+            <select name="tag" id="tag" onChange={this.handleChange}>
+              <option value="none" selected disabled hidden>Select a Tag</option>
+              <option value="Nature">Nature</option>
+              <option value="City">City</option>
+              <option value="Food">Food</option>
+              <option value="Glasses">Glasses</option>
+            </select>
+          </div>
+
+            {/* <div>
             <label for="image1">Image 1</label>
             <input type="file" id="image1" name="image1" value={this.state.image1}></input>
             </div>
@@ -42,10 +82,10 @@ export class NewBlogPost extends Component {
             <div>
             <label for="image3">Image 3</label>
             <input type="file" id="image3" name="image3" value={this.state.image3}></input>
-            </div>
+            </div> */}
 
             <br></br>
-            <input type="submit" value="Submit"></input>
+            <button>Upload Post</button>
         </form>
       </div>
     )

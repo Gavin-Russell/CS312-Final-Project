@@ -19,9 +19,12 @@ export class BlogPost extends Component {
     }
     return (
       <div className="blog post">
+        <div>----------------------------------------------------------------------</div>
+        <h3 className="username">User: {this.props.data.userName}</h3>
         <h2 className="title">{this.props.data.title}</h2>
-        <h3 className="username">{this.props.data.user}</h3>
-        <p className="post text">{this.props.data.text}</p>
+        <p className="description">{this.props.data.description}</p>
+        <p className="tag">#{this.props.data.tag}</p>
+        <div>----------------------------------------------------------------------</div>
       </div>
     );
   }

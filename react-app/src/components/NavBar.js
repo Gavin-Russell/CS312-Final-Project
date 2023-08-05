@@ -4,7 +4,6 @@ import SignUpPage from './SignUpPage'
 import ProfilePage from './ProfilePage'
 import BlogPostList from './BlogPostList'
 
-
 export class NavBar extends Component {
 
   constructor(props) {
@@ -16,13 +15,13 @@ export class NavBar extends Component {
   }
 
   // TODO: Implement filter
-  handleFilter = (event) => {
+  handleFilter = async (event) => {
     event.preventDefault()
-    this.setState({
-      filter: document.getElementById("Filter by: ").value
+    await this.setState({
+      filter: event.target.value//document.getElementById("Filter by: ").value
     })
 
-    this.props.updatePageContent(<BlogPostList filter={this.state.filter}></BlogPostList>)
+    this.props.updatePageContent(<BlogPostList key={this.state.filter} filter={this.state.filter}></BlogPostList>)
 
     console.log("Filtering by: " + this.state.filter)
   }
@@ -30,8 +29,6 @@ export class NavBar extends Component {
   handleLogin = (event) => {
     event.preventDefault()
     this.props.updatePageContent(<LoginPage ref={this.props.loginRef} handleLogin={this.props.handleLogin}></LoginPage>)
-    
-    // console.log("Login")
   }
 
   handleSignUp = (event) => {
@@ -50,11 +47,11 @@ export class NavBar extends Component {
 
   // TODO: Implement logout
   handleLogout = (event) => {
-    this.props.updateToken(null)
+    // this.props.updateToken(null)
 
-    this.forceUpdate()
+    // this.forceUpdate()
 
-    console.log("Logout")
+    // console.log("Logout")
   }
 
   render() {
@@ -65,7 +62,7 @@ export class NavBar extends Component {
 
           <div>
             <label htmlFor="Filter by: ">Filter by:</label>
-            <select name="Filter by: " id="Filter by: ">
+            <select name="Filter by: " id="Filter by: " onChange={this.handleFilter}>
               <option value="All">All</option>
               <option value="Username">Username</option>
               <option value="Nature">Nature</option>
@@ -73,7 +70,7 @@ export class NavBar extends Component {
               <option value="Food">Food</option>
               <option value="Glasses">Glasses</option>
             </select>
-            <input type="button" value="Filter" onClick={this.handleFilter}></input>
+            {/* <input type="button" value="Filter" onClick={this.handleFilter}></input> */}
           </div>
 
           {this.props.token === null ?
