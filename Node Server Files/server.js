@@ -187,6 +187,150 @@ app.post('/logIn', async function( request, response ) {
 	}
 })
 
+app.post('/addPost', async function( request, response ) {
+	
+	//initialize variables
+	var client, postsDatabase
+
+	try {
+		//try to 
+	
+		//connect to client		
+		client = new mongo.MongoClient(clientAddress);
+		//connect to admin database to start
+		postsDatabase = await client.db("Posts")
+		
+		
+	} catch(error) { 
+		//otherwise there was a problem
+		
+		//send error response
+		response
+			.status(502)
+			.send( {message: `There was an error connecting to the database. ERROR:    ${error}`} )	
+		
+		//close the connection
+        client.close()
+		
+		//end the function early
+		return false
+	}
+	
+	//add the post to the all collection
+	await postsDatabase.collection("all").insertOne({
+		"userName": request.body.userName,
+		"title": request.body.title,
+		"description": request.body.description,
+		"tag": request.body.tag
+	})
+	
+	
+	//return success
+	response
+        .status(200)
+        .send( {message: "Post successfully added"} )
+		
+	//close the connection
+    client.close()
+	
+	//return success
+	return true
+	
+})
+
+
+app.post('/getPosts', async function( request, response ) {
+	
+	//initialize variables
+	var client, postsCollection, postsArray
+
+	try {
+		//try to 
+	
+		//connect to client		
+		client = new mongo.MongoClient(clientAddress);
+		//connect to admin database to start
+		postsCollection = await client.db("Posts").collection("all")
+		
+		
+	} catch(error) { 
+		//otherwise there was a problem
+		
+		//send error response
+		response
+			.status(502)
+			.send( {message: `There was an error connecting to the database. ERROR:    ${error}`} )	
+		
+		//close the connection
+        client.close()
+		
+		//end the function early
+		return false
+	}
+	console.log(request.body.filter)
+	if( request.body.filter === "all" ) {
+		
+		console.log("ALL")
+		//get all posts
+		postsArray = await postsCollection.find().toArray()
+		
+		//close the connection
+        client.close()
+		
+		//send the response with the posts array
+		response
+			.status(200)
+			.send( await postsArray )
+			
+		//end the function early
+		return true
+		
+	} else if( request.body.filter === "tag" ) {
+		//get the posts specified
+		postsArray = await postsCollection.find({"tag":`${request.body.tag}`}).toArray()
+		
+		//close the connection
+        client.close()
+		
+		//send the response with the posts array
+		response
+			.status(200)
+			.send( postsArray )
+			
+		//end the function early
+		return true
+	
+	} else if( request.body.filter === "userName" ) {
+		//get the posts specified
+		postsArray = await postsCollection.find({"userName":`${request.body.userName}`}).toArray()
+		
+		//close the connection
+        client.close()
+		
+		//send the response with the posts array
+		response
+			.status(200)
+			.send( postsArray )
+			
+		//end the function early
+		return true
+		
+	} else {
+	
+		//close the connection
+        client.close()
+		
+		//send the response with the posts array
+		response
+			.status(400)
+			.send( "BAD REQUEST" )
+			
+		//end the function early
+		return false		
+	}
+
+})
+
 
 //listen on the specified port
 app.listen(PORT, function(){
