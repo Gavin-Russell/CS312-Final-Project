@@ -12,6 +12,7 @@ export class NewBlogPost extends Component {
       title: "",
       description: "",
       tag: "",
+      comments: "",
     };
   }
 
@@ -32,7 +33,6 @@ export class NewBlogPost extends Component {
     }
 
     let newPostData = this.state;
-    newPostData.comments = "";
 
     addBlogPost(newPostData)
       .then((res) => {
@@ -71,7 +71,7 @@ export class NewBlogPost extends Component {
           </div>
 
           <div>
-            <label for="content">Content</label>
+            <label htmlFor="content">Content</label>
             <textarea
               id="description"
               name="description"

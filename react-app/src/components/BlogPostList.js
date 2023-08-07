@@ -88,14 +88,12 @@ export class BlogPostList extends Component {
           </h1>
           {this.state.PostList.map((post) => {
             index++;
-            let jsonComments = post.comments;
-            let commentList = JSON.parse(jsonComments);
             return (
               <BlogPost
                 key={this.props.filter}
                 data={post}
                 number={index}
-                comments={commentList}
+                comments={post.comments}
                 handler={this.handlePostEdit}
                 commentHandler={this.handleCommentEdit}
               />

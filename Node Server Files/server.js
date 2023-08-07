@@ -327,7 +327,8 @@ app.post('/addPost', async function( request, response ) {
 		"userName": request.body.userName,
 		"title": request.body.title,
 		"description": request.body.description,
-		"tag": request.body.tag
+		"tag": request.body.tag,
+		"comments": []
 	})
 	
 	

@@ -3,8 +3,8 @@ import Comment from "./Comment";
 import { withCookies } from "react-cookie";
 
 export class BlogPost extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     console.log("constructing blog");
     console.log("props: ", this.props);
     this.state = {
