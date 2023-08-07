@@ -8,7 +8,7 @@ export class ProfileNavBar extends Component {
 
     handleEditProfile = (event) => {
         event.preventDefault()
-        this.props.updatePageContent(<EditProfilePage></EditProfilePage>)
+        this.props.updatePageContent(<EditProfilePage ></EditProfilePage>)
     }
 
     // TODO: Implement comment history fetching

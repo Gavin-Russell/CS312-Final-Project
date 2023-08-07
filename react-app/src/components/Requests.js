@@ -8,6 +8,10 @@ export function SignUp(newUser) {
   return axios.post("http://localhost:3001/signUp", newUser);
 }
 
+export async function EditProfile(userInfo) {
+  return axios.post("http://localhost:3001/editProfile", userInfo);
+}
+
 export function addBlogPost(newPost) {
   return axios.post("http://localhost:3001/addPost", newPost);
 }

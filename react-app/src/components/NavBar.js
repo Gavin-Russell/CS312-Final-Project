@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { Cookies } from 'react-cookie'
 import LoginPage from './LoginPage'
 import SignUpPage from './SignUpPage'
 import ProfilePage from './ProfilePage'
@@ -10,15 +11,35 @@ export class NavBar extends Component {
     super(props)
 
     this.state = {
-      filter: "All"
+      filter: "All",
+      logInButtons: <></>
     }
   }
 
-  // TODO: Implement filter
+  // set login buttons when component mounts
+  componentDidMount() {
+    var logInButtons = <></>;
+    if(this.props.token === null) {
+      logInButtons = <>
+        <ul><button onClick={this.handleLogin}>Login</button></ul>
+        <ul><button onClick={this.handleSignUp}>Sign Up</button></ul>
+      </>;
+    } else {
+      logInButtons = <>
+        <ul><button onClick={this.handleProfile}>Profile</button></ul>
+        <ul><button onClick={this.handleLogout}>Logout</button></ul>
+      </>;
+    }
+
+    this.setState({
+      logInButtons: logInButtons
+    })
+  }
+
   handleFilter = async (event) => {
     event.preventDefault()
     await this.setState({
-      filter: event.target.value//document.getElementById("Filter by: ").value
+      filter: event.target.value
     })
 
     this.props.updatePageContent(<BlogPostList key={this.state.filter} filter={this.state.filter}></BlogPostList>)
@@ -29,29 +50,51 @@ export class NavBar extends Component {
   handleLogin = (event) => {
     event.preventDefault()
     this.props.updatePageContent(<LoginPage ref={this.props.loginRef} handleLogin={this.props.handleLogin}></LoginPage>)
+
+    if(this.props.token !== null) {
+      this.setState({
+        logInButtons: <>
+          <ul><button onClick={this.handleProfile}>Profile</button></ul>
+          <ul><button onClick={this.handleLogout}>Logout</button></ul>
+        </>
+      })
+    }
   }
 
   handleSignUp = (event) => {
     event.preventDefault()
     this.props.updatePageContent(<SignUpPage ref={this.props.signupRef} handleSignUp={this.props.handleSignUp}></SignUpPage>)
 
-    // console.log("Sign Up")
+    if(this.props.token !== null) {
+      this.setState({
+        logInButtons: <>
+          <ul><button onClick={this.handleProfile}>Profile</button></ul>
+          <ul><button onClick={this.handleLogout}>Logout</button></ul>
+        </>
+      })
+    }
+  }
+
+  handleLogout = (event) => {
+
+    this.props.updatePageContent(<BlogPostList key={this.state.filter} filter={this.state.filter} handleLogout={this.props.handleLogout}></BlogPostList>)
+
+    // rerender nav
+    this.setState({
+      logInButtons: <>
+        <ul><button onClick={this.handleLogin}>Login</button></ul>
+        <ul><button onClick={this.handleSignUp}>Sign Up</button></ul>
+      </>
+    })
+
+    console.log("Logout")
   }
 
   handleProfile = (event) => {
     event.preventDefault()
-    this.props.updatePageContent(<ProfilePage></ProfilePage>)
+    this.props.updatePageContent(<ProfilePage username={this.props.token}></ProfilePage>)
 
     // console.log("Profile")
-  }
-
-  // TODO: Implement logout
-  handleLogout = (event) => {
-    // this.props.updateToken(null)
-
-    // this.forceUpdate()
-
-    // console.log("Logout")
   }
 
   render() {
@@ -73,15 +116,7 @@ export class NavBar extends Component {
             {/* <input type="button" value="Filter" onClick={this.handleFilter}></input> */}
           </div>
 
-          {this.props.token === null ?
-            <>
-            <ul><button onClick={this.handleLogin}>Login</button></ul>
-            <ul><button onClick={this.handleSignUp}>Sign Up</button></ul>
-            </>:
-            <>
-            <ul><button onClick={this.handleProfile}>Profile</button></ul>
-            <ul><button onClick={this.handleLogout}>Logout</button></ul>
-            </>}
+          {this.state.logInButtons}
         </nav>
       </div>
     )

@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import BlogPostList from "./BlogPostList";
 import { SignUp } from "./Requests";
 import LogIn from "./Requests";
+import { EditProfile } from "./Requests";
 
 const cookies = new Cookies();
 class MainPage extends Component {
@@ -125,6 +126,22 @@ class MainPage extends Component {
     }
   };
 
+  handleLogout = async (event) => {
+    //remove the token
+    cookies.remove('token')
+
+    //update the state
+    this.setState({
+      token: null
+    })
+
+    //redirect to the home page
+    this.updatePageContent(<BlogPostList></BlogPostList>)
+
+    //display the success message
+    window.alert("You have been logged out")
+  }
+
   render() {
     return (
       <div>
@@ -134,7 +151,8 @@ class MainPage extends Component {
                 loginRef={this.loginRef}
                 signupRef={this.signupRef}
                 handleSignUp={this.handleSignUp}
-                handleLogin={this.handleLogin}></NavBar>
+                handleLogin={this.handleLogin}
+                handleLogout={this.handleLogout}></NavBar>
         <> {this.state.pageContent} </>
       </div>
     );
