@@ -14,5 +14,9 @@ export function addBlogPost(newPost) {
 
 export async function getPosts(filter) {
   let posts = await axios.post("http://localhost:3001/getPosts", filter);
-  return posts.data
+  return posts.data;
+}
+
+export function updateBlogPost(updatedPost) {
+  return axios.post("http://localhost:3001/updatePost", updatedPost);
 }
