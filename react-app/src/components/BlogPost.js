@@ -6,12 +6,6 @@ export class BlogPost extends Component {
     console.log("constructing blog");
     console.log("props: ", this.props);
     console.log("state: ", this.state);
-    // this.state = {
-    //   User: this.props.data.user,
-    //   Title: this.props.data.title,
-    //   Topic: this.props.data.topic,
-    //   Text: this.props.data.text,
-    // };
   }
   render() {
     if (this.props == null) {

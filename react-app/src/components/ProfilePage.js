@@ -17,6 +17,8 @@ export class ProfilePage extends Component {
     this.setState({
       pageContent: content
     })
+
+    document.getElementById("status").innerHTML = ""
   }
 
 
@@ -25,7 +27,6 @@ export class ProfilePage extends Component {
       <div>
         <ProfileNavBar updatePageContent={this.updatePageContent} username={this.props.username}></ProfileNavBar>
         {this.state.pageContent}
-
       </div>
     )
   }

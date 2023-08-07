@@ -26,9 +26,8 @@ export class NavBar extends Component {
       </>;
     } else {
       logInButtons = <>
-        <ul><button onClick={this.handleProfile}>Profile</button></ul>
+        <ul><button onClick={this.handleProfile}><small>Hello {this.props.token}!</small><br/>Profile</button></ul>
         <ul><button onClick={this.handleLogout}>Logout</button></ul>
-        <ul>Hello {this.props.token}!</ul>
       </>;
     }
 
@@ -88,7 +87,7 @@ export class NavBar extends Component {
       </>
     })
 
-    console.log("Logout")
+    // console.log("Logout")
   }
 
   handleProfile = (event) => {

@@ -15,13 +15,13 @@ class SignUpPage extends Component {
          firstName: "",
          lastName: "",
          userName: "",
-         password: ""
+         password: "",
       }
     }
 
 
     handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value } )
+        this.setState({[event.target.name]: event.target.value} )
     }
 
 

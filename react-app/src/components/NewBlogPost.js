@@ -31,13 +31,17 @@ export class NewBlogPost extends Component {
         //on succesful sign up
 
         //display the success message
-        window.alert(res.data.message)
+        //window.alert(res.data.message)
+        document.getElementById("status").innerHTML = res.data.message
+        document.getElementById("status").style.color = "green"
 
       }).catch ( res => {
         //on unsuccesful sign up
 
         //display the error message
-        window.alert("There was an error adding the post")
+        //window.alert("There was an error adding the post")
+        document.getElementById("status").innerHTML = "There was an error adding the post"
+        document.getElementById("status").style.color = "red"
         
       })
 

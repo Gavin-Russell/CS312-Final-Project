@@ -29,10 +29,14 @@ export class EditProfilePage extends Component {
     var res
     try {
       res = await EditProfile(this.state)
-      window.alert(res.data.message)
+      // window.alert(res.data.message)
+      document.getElementById("status").innerHTML = res.data.message
+      document.getElementById("status").style.color = "green"
     }
     catch (error) {
-      window.alert(error.response.data.message)
+      // window.alert(error.response.data.message)
+      document.getElementById("status").innerHTML = error.response.data.message
+      document.getElementById("status").style.color = "red"
     }
   }
 
