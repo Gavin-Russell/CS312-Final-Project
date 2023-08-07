@@ -17,7 +17,7 @@ export class BlogPost extends Component {
         <h3 className="username">User: {this.props.data.userName}</h3>
         <h2 className="title">{this.props.data.title}</h2>
         <p className="description">{this.props.data.description}</p>
-        <p className="tag">#{this.props.data.tag}</p>
+        <p className="tag">{this.props.data.tag ? "#" + this.props.data.tag : null}</p>
         <hr></hr>
       </div>
     );

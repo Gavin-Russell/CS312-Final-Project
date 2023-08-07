@@ -26,6 +26,14 @@ export class NewBlogPost extends Component {
     handleSubmit = async (event) => {
       event.preventDefault();
 
+      //if any fields are left empty
+      if ( this.state.title === "" || this.state.description === "" ) {
+        //window.alert("All entries must be filled");
+        document.getElementById("status").innerHTML = "All entries must be filled"
+        document.getElementById("status").style.color = "red"
+        return
+      }
+
       addBlogPost(this.state).then( res => {
 
         //on succesful sign up

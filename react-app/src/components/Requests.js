@@ -16,7 +16,7 @@ export function addBlogPost(newPost) {
   return axios.post("http://localhost:3001/addPost", newPost);
 }
 
-export async function getPosts(filter) {
-  let posts = await axios.post("http://localhost:3001/getPosts", filter);
+export async function getPosts(filterParams) {
+  let posts = await axios.post("http://localhost:3001/getPosts", filterParams);
   return posts.data
 }

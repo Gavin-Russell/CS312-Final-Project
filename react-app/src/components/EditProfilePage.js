@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { EditProfile } from './Requests'
-import { Cookies } from "react-cookie";
 
 export class EditProfilePage extends Component {
   constructor(props) {

@@ -4,7 +4,6 @@ import NavBar from "./NavBar";
 import BlogPostList from "./BlogPostList";
 import { SignUp } from "./Requests";
 import LogIn from "./Requests";
-import { EditProfile } from "./Requests";
 
 const cookies = new Cookies();
 class MainPage extends Component {

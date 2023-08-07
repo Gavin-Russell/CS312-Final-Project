@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import ProfileNavBar from './ProfileNavBar.js'
 import NewBlogPost from './NewBlogPost.js';
-import { Cookies } from "react-cookie";
 
 export class ProfilePage extends Component {
 

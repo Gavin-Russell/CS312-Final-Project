@@ -348,7 +348,14 @@ app.post('/addPost', async function( request, response ) {
 app.post('/getPosts', async function( request, response ) {
 	
 	//initialize variables
-	var client, postsCollection, postsArray
+	let client, postsCollection, postsArray
+
+	// parse filter and username
+	const filter = request.body.filter
+	const userName = request.body.userName
+
+	// console.log("FILTER: " + filter)
+	// console.log("USERNAME: " + userName)
 
 	try {
 		//try to 
@@ -374,11 +381,16 @@ app.post('/getPosts', async function( request, response ) {
 		return false
 	}
 	// console.log(request.body.filter)
-	if( request.body.filter === "all" ) {
+	if( filter === "all" ) {
 		
 		// console.log("ALL")
 		//get all posts
 		postsArray = await postsCollection.find().toArray()
+
+		// filter by username if specified
+		if( userName !== undefined ) {
+			postsArray = postsArray.filter( post => post.userName === userName );
+		}
 		
 		//close the connection
         client.close()
@@ -391,9 +403,14 @@ app.post('/getPosts', async function( request, response ) {
 		//end the function early
 		return true
 		
-	} else if( request.body.filter === "tag" ) {
+	} else if( filter === "tag" ) {
 		//get the posts specified
 		postsArray = await postsCollection.find({"tag":`${request.body.tag}`}).toArray()
+
+		// filter by username if specified
+		if( userName !== undefined ) {
+			postsArray = postsArray.filter( post => post.userName === userName );
+		}
 		
 		//close the connection
         client.close()
@@ -406,21 +423,6 @@ app.post('/getPosts', async function( request, response ) {
 		//end the function early
 		return true
 	
-	} else if( request.body.filter === "userName" ) {
-		//get the posts specified
-		postsArray = await postsCollection.find({"userName":`${request.body.userName}`}).toArray()
-		
-		//close the connection
-        client.close()
-		
-		//send the response with the posts array
-		response
-			.status(200)
-			.send( postsArray )
-			
-		//end the function early
-		return true
-		
 	} else {
 	
 		//close the connection

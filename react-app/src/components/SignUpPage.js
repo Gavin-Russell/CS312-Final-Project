@@ -1,9 +1,4 @@
 import React, { Component } from 'react'
-import { instanceOf } from 'prop-types';
-import { withCookies, Cookies } from 'react-cookie';
-import { SignUp } from './Requests'
-import LogIn from './Requests'
-
 
 
 class SignUpPage extends Component {

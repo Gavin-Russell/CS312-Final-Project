@@ -29,7 +29,7 @@ export class BlogPostList extends Component {
     else {
       this.setState({
         Filter: "all",
-        PostList: await getPosts({"filter":"all"})
+        PostList: await getPosts({"filter":"all", "userName":`${this.props.username}`})
       })
     }
   }
@@ -54,12 +54,11 @@ export class BlogPostList extends Component {
 //         }
 //       }
 //     }
-
 //   return null; // Otherwise no change to state
 // }
 
   render() {
-    let pageContent = <h1>Nothing to show here</h1>;
+    var pageContent = <h1>Nothing to show here</h1>;
     if (this.state.PostList !== null ) {
       pageContent = (
         <div>

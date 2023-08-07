@@ -1,5 +1,4 @@
 import { Component } from 'react'
-import { Cookies } from 'react-cookie'
 import LoginPage from './LoginPage'
 import SignUpPage from './SignUpPage'
 import ProfilePage from './ProfilePage'
@@ -107,7 +106,6 @@ export class NavBar extends Component {
             <label htmlFor="Filter by: ">Filter by:</label>
             <select name="Filter by: " id="Filter by: " onChange={this.handleFilter}>
               <option value="All">All</option>
-              <option value="Username">Username</option>
               <option value="Nature">Nature</option>
               <option value="City">City</option>
               <option value="Food">Food</option>

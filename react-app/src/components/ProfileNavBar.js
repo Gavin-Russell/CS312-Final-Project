@@ -20,7 +20,7 @@ export class ProfileNavBar extends Component {
     // TODO: Implement blog post history fetching
     handleBlogPosts = (event) => {
         event.preventDefault()
-        this.props.updatePageContent(<BlogPostList></BlogPostList>)
+        this.props.updatePageContent(<BlogPostList filter="all" username={this.props.username}></BlogPostList>)
     }
 
     handleNewBlogPost = (event) => {
