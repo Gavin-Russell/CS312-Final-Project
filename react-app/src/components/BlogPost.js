@@ -26,6 +26,24 @@ export class BlogPost extends Component {
     this.props.commentHandler(formState, commentNum, this.state.Number);
   };
 
+  // How one would add a comment using the enter key
+  // give or take lol
+  handleNewComment = (event) => {
+    event.preventDefault();
+    if (event.key === "Enter" && event.target.value !== "") {
+      let newComment = {
+        User: this.state.currUser,
+        Text: event.target.value,
+      };
+
+      this.setState({
+        CommentList: [...this.state.CommentList, newComment],
+      });
+    } else {
+      return;
+    }
+  };
+
   render() {
     if (this.props == null) {
       return null;
@@ -37,6 +55,7 @@ export class BlogPost extends Component {
         <h2 className="title">{this.state.Title}</h2>
         <p className="description">{this.state.Text}</p>
         <p className="tag">{this.state.Tag ? "#" + this.state.Tag : null}</p>
+
         <div>
           {this.state.CommentList.map((comment) => {
             let userMatch = this.state.currUser === comment.User;
