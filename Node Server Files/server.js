@@ -190,10 +190,11 @@ app.post('/logIn', async function( request, response ) {
 app.post('/editProfile', async function( request, response ) {
 	// initialize variables
 	console.log("EDIT PROFILE")
-	console.log(request.body)
 	
-	var client, profilesCollection, profileList, userExists = false, userProfile
+	var client, profilesCollection, profileList
 
+	// get input data
+	const userName = request.body.userName
 	const password = request.body.password
 	const confirmPassword = request.body.confirmPassword
 	const firstName = request.body.firstName
@@ -212,6 +213,7 @@ app.post('/editProfile', async function( request, response ) {
 
 		//connect to client
 		client = new mongo.MongoClient(clientAddress);
+
 		//connect to admin database to start
 		profilesCollection = await client.db("Users").collection("profiles")
 
@@ -234,33 +236,38 @@ app.post('/editProfile', async function( request, response ) {
 	//create the list of all user profiles
 	profileList = await profilesCollection.find().toArray()
 
+	// console.log("PROFILE LIST")
+	// console.log(profileList)
+
 	//loop through all posts to see if the username already exists
-	for( var i=0; i < await profilesCollection.countDocuments(); i++ ) {
+	for( var i=0; i < profileList.length; i++ ) {
 
 		// if the username exists update the profile
-		if( profileList[i].userName === request.body.userName ) {
-			if (password !== "") {
+		if( profileList[i].userName === userName ) {
+			if (password != "") {
 				await profilesCollection.updateOne(
-					{userName: request.body.userName},
+					{userName: userName},
 					{$set: {password: password}}
 				)
 			}
 
 			if (firstName !== "") {
 				await profilesCollection.updateOne(
-					{userName: request.body.userName},
+					{userName: userName},
 					{$set: {firstName: firstName}}
 				)
 			}
 
 			if (lastName !== "") {
 				await profilesCollection.updateOne(
-					{userName: request.body.userName},
+					{userName: userName},
 					{$set: {lastName: lastName}}
 				)
 			}
 
 			// return success
+			console.log("SUCCESS")
+
 			response
 				.status(200)
 				.send( {message: "Successfully updated profile!"} )
@@ -366,10 +373,10 @@ app.post('/getPosts', async function( request, response ) {
 		//end the function early
 		return false
 	}
-	console.log(request.body.filter)
+	// console.log(request.body.filter)
 	if( request.body.filter === "all" ) {
 		
-		console.log("ALL")
+		// console.log("ALL")
 		//get all posts
 		postsArray = await postsCollection.find().toArray()
 		

@@ -23,7 +23,7 @@ export class ProfilePage extends Component {
   render() {
     return (
       <div>
-        <ProfileNavBar updatePageContent={this.updatePageContent}></ProfileNavBar>
+        <ProfileNavBar updatePageContent={this.updatePageContent} username={this.props.username}></ProfileNavBar>
         {this.state.pageContent}
 
       </div>

@@ -28,6 +28,7 @@ export class NavBar extends Component {
       logInButtons = <>
         <ul><button onClick={this.handleProfile}>Profile</button></ul>
         <ul><button onClick={this.handleLogout}>Logout</button></ul>
+        <ul>Hello {this.props.token}!</ul>
       </>;
     }
 
