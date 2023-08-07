@@ -12,10 +12,8 @@ export class NewBlogPost extends Component {
             userName: cookies.get('token'),
             title: "",
             description: "",
-            tag: ""
-            // image1: "",
-            // image2: "",
-            // image3: "",
+            tag: "",
+            
         }
     }
 
@@ -80,21 +78,6 @@ export class NewBlogPost extends Component {
               <option value="Glasses">Glasses</option>
             </select>
           </div>
-
-            {/* <div>
-            <label for="image1">Image 1</label>
-            <input type="file" id="image1" name="image1" value={this.state.image1}></input>
-            </div>
-
-            <div>
-            <label for="image2">Image 2</label>
-            <input type="file" id="image2" name="image2" value={this.state.image2}></input>
-            </div>
-
-            <div>
-            <label for="image3">Image 3</label>
-            <input type="file" id="image3" name="image3" value={this.state.image3}></input>
-            </div> */}
 
             <br></br>
             <button>Upload Post</button>
