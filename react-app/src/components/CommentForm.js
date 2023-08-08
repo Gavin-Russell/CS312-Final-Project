@@ -8,6 +8,7 @@ class CommentForm extends Component {
       this.state = {
         User: this.props.user,
         Text: this.props.text,
+        BackupText: this.props.text,
       };
     } else {
       this.state = {
@@ -20,7 +21,7 @@ class CommentForm extends Component {
   handleTextChange = (event) => {
     this.setState({ Text: event.target.value });
 
-    event.target.parentNode.querySelector(".status").innerHTML = "";
+    event.target.parentNode.parentNode.querySelector(".status").innerHTML = "";
   };
 
   submitHandler = (event) => {
@@ -50,7 +51,7 @@ class CommentForm extends Component {
           
             {this.props.editing ? (
               <>
-              <input type="button" value="Cancel" onClick={this.props.handler}></input>
+              <input type="button" value="Cancel" onClick={this.props.cancelHandler(this.state.BackupText)}></input>
               <input type="submit" value="Save" onClick={this.props.handler}></input>
               </>
             ) : 

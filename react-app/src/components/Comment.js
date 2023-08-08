@@ -17,6 +17,7 @@ class Comment extends Component {
   handleEditButton = (event) => {
     //set the editing state to re render the editor component
     this.setState({ Editing: true });
+    
   };
 
   handleDeleteButton = (event) => {
@@ -28,21 +29,31 @@ class Comment extends Component {
     this.props.editHandler(formState, this.state.Number);
   };
 
+  handleCancelEdit = (oldText) => {
+    this.setState({ Editing: false });
+    this.setState({ Text: oldText });
+
+  };
+
   render() {
     let pageContent;
     //check if the editable version should be open
     if (this.state.Editing) {
       pageContent = (
+        <>
         <CommentForm
           user={this.state.User}
           text={this.state.Text}
           handler={this.handleEditButton}
           saveHandler={this.handleSaveEdit}
+          cancelHandler={this.handleCancelEdit}
           editing = {true}
         />
+        </>
       );
     } else {
       pageContent = (
+        <>
         <div className="Comment">
           <span className="commentUser"><strong>{this.state.User}: </strong></span>
           <span className="commentText">{this.state.Text}</span>
@@ -53,6 +64,7 @@ class Comment extends Component {
             </div>
           ) : null}
         </div>
+        </>
       );
     }
     return pageContent;
