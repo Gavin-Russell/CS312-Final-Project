@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Comment from "./Comment";
+import CommentForm from "./CommentForm";
 import { withCookies } from "react-cookie";
+import { updateBlogPost } from "./Requests";
 
 export class BlogPost extends Component {
   constructor(props) {
@@ -30,19 +32,36 @@ export class BlogPost extends Component {
   // give or take lol
   handleNewComment = (event) => {
     event.preventDefault();
-    if (event.key === "Enter" && event.target.value !== "") {
-      let newComment = {
-        User: this.state.currUser,
-        Text: event.target.value,
-      };
 
-      this.setState({
-        CommentList: [...this.state.CommentList, newComment],
-      });
-    } else {
+    if (event.target.querySelector("input").value === "Cancel") {
+
       return;
     }
-  };
+    
+    let newComment = {
+      User: this.state.currUser,
+      text: event.target.querySelector("input").value,
+      number: this.state.CommentList.length,
+    };
+
+    this.setState({
+      CommentList: [...this.state.CommentList, newComment],
+    });
+
+    event.target.querySelector("input").value = "";
+
+    // update the database
+    let updatedPost = {
+      id: this.state.Number,
+      user: this.state.User,
+      title: this.state.Title,
+      tag: this.state.Tag,
+      description: this.state.Text,
+      comments: [...this.state.CommentList, newComment],
+    };
+
+    updateBlogPost(updatedPost);
+  }
 
   render() {
     if (this.props == null) {
@@ -55,6 +74,8 @@ export class BlogPost extends Component {
         <h2 className="title">{this.state.Title}</h2>
         <p className="description">{this.state.Text}</p>
         <p className="tag">{this.state.Tag ? "#" + this.state.Tag : null}</p>
+
+        <CommentForm handler={this.handleNewComment} />
 
         <div>
           {this.state.CommentList.map((comment) => {

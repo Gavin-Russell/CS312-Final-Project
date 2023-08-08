@@ -14,7 +14,7 @@ class MainPage extends Component {
     this.signupRef = React.createRef();
     this.state = {
       token: cookies.get('token') || null,
-      pageContent: <BlogPostList></BlogPostList>
+      pageContent: <BlogPostList filter="all"></BlogPostList>,
     }
   }
 
@@ -69,7 +69,7 @@ class MainPage extends Component {
         cookies.set('token', loginElement.state.userName)
         this.setState({
           token: loginElement.state.userName,
-	        pageContent: <BlogPostList></BlogPostList>
+	        pageContent: <BlogPostList filter="all"></BlogPostList>
         })
 
       }).catch ( res => { 
@@ -125,7 +125,7 @@ class MainPage extends Component {
         cookies.set('token', signupElement.state.userName)
         this.setState({
           token: signupElement.state.userName,
-		      pageContent: <BlogPostList></BlogPostList>
+		      pageContent: <BlogPostList filter="all"></BlogPostList>
         })
 
       }).catch ( res => {
@@ -151,7 +151,7 @@ class MainPage extends Component {
     })
 
     //redirect to the home page
-    this.updatePageContent(<BlogPostList></BlogPostList>)
+    this.updatePageContent(<BlogPostList filter="all"></BlogPostList>)
 
     //display the success message in status paragraph element
     //window.alert("You have been logged out")

@@ -352,7 +352,7 @@ app.post('/getPosts', async function( request, response ) {
 	let client, postsCollection, postsArray
 
 	// parse filter and username
-	const filter = request.body.filter
+	const filter = request.body.filter.toLowerCase()
 	const userName = request.body.userName
 
 	// console.log("FILTER: " + filter)
@@ -388,11 +388,14 @@ app.post('/getPosts', async function( request, response ) {
 		//get all posts
 		postsArray = await postsCollection.find().toArray()
 
+		console.log(postsArray)
 		// filter by username if specified
 		if( userName !== undefined ) {
+			console.log("USERNAME " + userName)
 			postsArray = postsArray.filter( post => post.userName === userName );
 		}
 		
+		console.log(postsArray)
 		//close the connection
         client.close()
 		
@@ -440,6 +443,180 @@ app.post('/getPosts', async function( request, response ) {
 
 })
 
+app.post('/updatePost', async function( request, response ) {
+	// initialize variables
+	var client, postsCollection
+
+	console.log("UPDATE POST")
+	console.log(request.body)
+
+	// get input data
+	const id = request.body.id
+	const userName = request.body.userName
+	const title = request.body.title
+	const description = request.body.description
+	const tag = request.body.tag
+	const comments = request.body.comments
+
+	try {
+		//try to
+
+		//connect to client
+		client = new mongo.MongoClient(clientAddress);
+
+		//connect to admin database to start
+		postsCollection = await client.db("Posts").collection("all")
+
+	} catch(error) {
+		//otherwise there was a problem
+		console.log("ERROR: " + error)
+
+		//send error response
+		response
+			.status(502)
+			.send( {message: `There was an error connecting to the database. ERROR:    ${error}`} )
+
+		//close the connection
+		client.close()
+
+		//end the function early
+		return false
+	}
+
+	// update the post
+	await postsCollection.updateOne(
+		{_id: new mongo.ObjectId(id)},
+		{$set: {
+			userName: userName,
+			title: title,
+			description: description,
+			tag: tag,
+			comments: comments
+		}}
+	)
+
+	//close the connection
+	client.close()
+
+	// return success
+	response
+		.status(200)
+		.send( {message: "Successfully updated post!"} )
+})
+
+
+app.post('/deleteBlogPost', async function( request, response ) {
+
+	//initialize variables
+	var client, postsCollection
+
+	// get input data
+	const id = request.body.id
+
+	try {
+		//try to
+
+		//connect to client
+		client = new mongo.MongoClient(clientAddress);
+
+		//connect to admin database to start
+		postsCollection = await client.db("Posts").collection("all")
+
+	} catch(error) {
+		//otherwise there was a problem
+
+		//send error response
+		response
+			.status(502)
+			.send( {message: `There was an error connecting to the database. ERROR:    ${error}`} )
+
+		//close the connection
+		client.close()
+
+		//end the function early
+		return false
+	}
+
+	// delete the post
+	await postsCollection.deleteOne(
+		{_id: new mongo.ObjectId(id)}
+	)
+
+	//close the connection
+	client.close()
+
+	// return success
+	response
+		.status(200)
+		.send( {message: "Successfully deleted post!"} )
+})
+
+
+app.post('/userComments', async function( request, response ) {
+
+	//initialize variables
+	var client, postsCollection, postsArray
+	let commentsArray = []
+
+	// get input data
+	const userName = request.body.userName
+
+	try {
+		//try to
+
+		//connect to client
+		client = new mongo.MongoClient(clientAddress);
+
+		//connect to admin database to start
+		postsCollection = await client.db("Posts").collection("all")
+
+	} catch(error) {
+		//otherwise there was a problem
+
+		//send error response
+		response
+			.status(502)
+			.send( {message: `There was an error connecting to the database. ERROR:    ${error}`} )
+
+		//close the connection
+		client.close()
+
+		//end the function early
+		return false
+	}
+
+	// get all posts
+	postsArray = await postsCollection.find().toArray()
+
+	// loop through all comments on each post
+	for (var i = 0; i < postsArray.length; i++) {
+		if (postsArray[i].comments === []) {
+			continue
+		}
+
+		for (var j = 0; j < postsArray[i].comments.length; j++) {
+			// if the comment is by the user, add it to the array
+			if (postsArray[i].comments[j].User === userName) {
+				const comment = {
+					user: postsArray[i].comments[j].User,
+					text: postsArray[i].comments[j].text,
+					number: postsArray[i].comments[j].number
+				}
+				commentsArray.push(comment)
+			}
+		}
+	}
+
+	//close the connection
+	client.close()
+
+	// return success
+	response
+		.status(200)
+		.send( commentsArray )
+
+	return true
+})
 
 //listen on the specified port
 app.listen(PORT, function(){

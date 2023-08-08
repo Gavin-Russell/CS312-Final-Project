@@ -79,7 +79,6 @@ export class BlogPostList extends Component {
 
   render() {
     let pageContent = <h1>Nothing to show here</h1>;
-    let index = -1;
     if (this.state.PostList !== null) {
       pageContent = (
         <div>
@@ -87,12 +86,11 @@ export class BlogPostList extends Component {
             <u>Posts</u>
           </h1>
           {this.state.PostList.map((post) => {
-            index++;
             return (
               <BlogPost
                 key={this.props.filter}
                 data={post}
-                number={index}
+                id={post._id}
                 comments={post.comments}
                 handler={this.handlePostEdit}
                 commentHandler={this.handleCommentEdit}

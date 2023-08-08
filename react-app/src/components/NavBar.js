@@ -104,7 +104,7 @@ export class NavBar extends Component {
 
           <div>
             <label htmlFor="Filter by: ">Filter by:</label>
-            <select name="Filter by: " id="Filter by: " onChange={this.handleFilter}>
+            <select name="Filter by: " id="Filter by: " onChange={this.handleFilter} >
               <option value="All">All</option>
               <option value="Nature">Nature</option>
               <option value="City">City</option>

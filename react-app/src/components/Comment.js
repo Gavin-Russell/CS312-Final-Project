@@ -3,14 +3,14 @@ import CommentForm from "./CommentForm";
 //import { withCookies } from "react-cookie";
 
 class Comment extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       Number: this.props.number,
       signedIn: this.props.signedIn,
       User: this.props.user,
       Text: this.props.text,
-      Editing: this.props.editing,
+      Editing: false,
     };
   }
 
@@ -32,6 +32,8 @@ class Comment extends Component {
           user={this.state.User}
           text={this.state.Text}
           handler={this.handleEditButton}
+          saveHandler={this.handleSaveEdit}
+          editing = {true}
         />
       );
     } else {

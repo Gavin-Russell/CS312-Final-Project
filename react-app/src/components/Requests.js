@@ -24,3 +24,11 @@ export async function getPosts(filterParams) {
 export function updateBlogPost(updatedPost) {
   return axios.post("http://localhost:3001/updatePost", updatedPost);
 }
+
+export function deleteBlogPost(postId) {
+  return axios.post("http://localhost:3001/deletePost", postId);
+}
+
+export function userComments(user) {
+  return axios.post("http://localhost:3001/userComments", user);
+}

@@ -20,6 +20,14 @@ nav {
   margin: 2px 4px;
 }
 
+hr {
+  border: 0;
+  height: 1px;
+  background-color: rgba(17, 67, 0, 0.87);
+  margin: 0 auto;
+  width: 95%;
+}
+
 button, input, textarea {
   font-family: inherit;
   font-size: inherit;

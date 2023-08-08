@@ -11,13 +11,11 @@ export class ProfileNavBar extends Component {
         this.props.updatePageContent(<EditProfilePage username={this.props.username}></EditProfilePage>)
     }
 
-    // TODO: Implement comment history fetching
     handleEditComments = (event) => {
         event.preventDefault()
-        this.props.updatePageContent(<EditCommentsPage></EditCommentsPage>)
+        this.props.updatePageContent(<EditCommentsPage username={this.props.username}></EditCommentsPage>)
     }
 
-    // TODO: Implement blog post history fetching
     handleBlogPosts = (event) => {
         event.preventDefault()
         this.props.updatePageContent(<BlogPostList filter="all" username={this.props.username}></BlogPostList>)
