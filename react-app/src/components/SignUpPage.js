@@ -1,9 +1,4 @@
 import React, { Component } from 'react'
-import { instanceOf } from 'prop-types';
-import { withCookies, Cookies } from 'react-cookie';
-import { SignUp } from './Requests'
-import LogIn from './Requests'
-
 
 
 class SignUpPage extends Component {
@@ -15,13 +10,13 @@ class SignUpPage extends Component {
          firstName: "",
          lastName: "",
          userName: "",
-         password: ""
+         password: "",
       }
     }
 
 
     handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value } )
+        this.setState({[event.target.name]: event.target.value} )
     }
 
 

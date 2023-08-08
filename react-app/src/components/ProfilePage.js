@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import ProfileNavBar from './ProfileNavBar.js'
 import NewBlogPost from './NewBlogPost.js';
-import { Cookies } from "react-cookie";
 
 export class ProfilePage extends Component {
 
@@ -17,15 +16,16 @@ export class ProfilePage extends Component {
     this.setState({
       pageContent: content
     })
+
+    document.getElementById("status").innerHTML = ""
   }
 
 
   render() {
     return (
       <div>
-        <ProfileNavBar updatePageContent={this.updatePageContent}></ProfileNavBar>
+        <ProfileNavBar updatePageContent={this.updatePageContent} username={this.props.username} blogHistory={true}></ProfileNavBar>
         {this.state.pageContent}
-
       </div>
     )
   }

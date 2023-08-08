@@ -8,32 +8,31 @@ export function SignUp(newUser) {
   return axios.post("http://localhost:3001/signUp", newUser);
 }
 
-export function getAllPosts() {
-  const dummyData = [
-    {
-      title: "title 1",
-      user: "user 1",
-      topic: "topic 1",
-      text: "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah ",
-    },
-    {
-      title: "title 2",
-      user: "user 2",
-      topic: "topic 2",
-      text: "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah ",
-    },
-    {
-      title: "title 3",
-      user: "user 3",
-      topic: "topic 3",
-      text: "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah ",
-    },
-    {
-      title: "title 4",
-      user: "user 4",
-      topic: "topic 4",
-      text: "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah ",
-    },
-  ];
-  return dummyData;
+export async function EditProfile(userInfo) {
+  return axios.post("http://localhost:3001/editProfile", userInfo);
+}
+
+export function addBlogPost(newPost) {
+  return axios.post("http://localhost:3001/addPost", newPost);
+}
+
+export async function getPosts(filterParams) {
+  let posts = await axios.post("http://localhost:3001/getPosts", filterParams);
+  return posts.data
+}
+
+export function updateBlogPost(updatedPost) {
+  return axios.post("http://localhost:3001/updatePost", updatedPost);
+}
+
+export function deleteBlogPost(postId) {
+  return axios.post("http://localhost:3001/deletePost", postId);
+}
+
+export function userComments(user) {
+  return axios.post("http://localhost:3001/userComments", user);
+}
+
+export function deleteComment(postId, commentId) {
+  return axios.post("http://localhost:3001/deleteComment", {postId, commentId});
 }

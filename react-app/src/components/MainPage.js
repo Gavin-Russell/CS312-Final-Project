@@ -13,8 +13,8 @@ class MainPage extends Component {
     this.loginRef = React.createRef();
     this.signupRef = React.createRef();
     this.state = {
-      token: null, // cookies.get('token') || null, //"test"
-      pageContent: <BlogPostList></BlogPostList>
+      token: cookies.get('token') || null,
+      pageContent: <BlogPostList filter="all"></BlogPostList>,
     }
   }
 
@@ -22,6 +22,8 @@ class MainPage extends Component {
     this.setState({
       pageContent: content
     })
+
+    document.getElementById("status").innerHTML = ""
   }
 
   updateToken = (token) => {
@@ -47,7 +49,9 @@ class MainPage extends Component {
       loginElement.state.password === "" ||
       loginElement.state.userName === ""
     ) {
-      window.alert("All entries must be filled");
+      //window.alert("All entries must be filled");
+      document.getElementById("status").innerHTML = "All entries must be filled"
+      document.getElementById("status").style.color = "red"
     }
 
     //otherwise it will attempt to log in
@@ -57,20 +61,24 @@ class MainPage extends Component {
         //on successful login
         
         //display success message
-        window.alert(res.data.message)
+        // window.alert(res.data.message)
+        // document.getElementById("status").innerHTML = res.data.message
+        // document.getElementById("status").style.color = "green"
 
         //redirect, login, and cookies
         cookies.set('token', loginElement.state.userName)
         this.setState({
           token: loginElement.state.userName,
-	        pageContent: <BlogPostList></BlogPostList>
+	        pageContent: <BlogPostList filter="all"></BlogPostList>
         })
 
       }).catch ( res => { 
         //on unsucessful login
 
         //display error message
-        window.alert(res.response.data.message)
+        //window.alert(res.response.data.message)
+        document.getElementById("status").innerHTML = res.response.data.message
+        document.getElementById("status").style.color = "red"
 
       })
     }
@@ -89,12 +97,16 @@ class MainPage extends Component {
       signupElement.state.lastName === "" ||
       signupElement.state.userName === ""
     ) {
-      window.alert("All entries must be filled");
+     //window.alert("All entries must be filled");
+      document.getElementById("status").innerHTML = "All entries must be filled"
+      document.getElementById("status").style.color = "red"
     }
 
     //also username cannot be null
     else if( signupElement.state.userName === "null" ) {
-      window.alert("That username is not valid")
+      //window.alert("That username is not valid")
+      document.getElementById("status").innerHTML = "That username is not valid"
+      document.getElementById("status").style.color = "red"
     }
 
     //otherwise it will attempt to sign up
@@ -105,25 +117,47 @@ class MainPage extends Component {
         //on succesful sign up
 
         //display the success message
-        window.alert(res.data.message)
+        //window.alert(res.data.message)
+        // document.getElementById("status").innerHTML = res.data.message
+        // document.getElementById("status").style.color = "green"
 
         //redirect, login, and cookies
         cookies.set('token', signupElement.state.userName)
         this.setState({
           token: signupElement.state.userName,
-		      pageContent: <BlogPostList></BlogPostList>
+		      pageContent: <BlogPostList filter="all"></BlogPostList>
         })
 
       }).catch ( res => {
         //on unsuccesful sign up
 
         //display the error message
-        window.alert(res.response.data.message)
+        //window.alert(res.response.data.message)
+        document.getElementById("status").innerHTML = res.response.data.message
+        document.getElementById("status").style.color = "red"
         
       })
       
     }
   };
+
+  handleLogout = async (event) => {
+    //remove the token
+    cookies.remove('token')
+
+    //update the state
+    this.setState({
+      token: null
+    })
+
+    //redirect to the home page
+    this.updatePageContent(<BlogPostList filter="all"></BlogPostList>)
+
+    //display the success message in status paragraph element
+    //window.alert("You have been logged out")
+    // document.getElementById("status").innerHTML = "You have been logged out"
+    // document.getElementById("status").style.color = "green"
+  }
 
   render() {
     return (
@@ -134,8 +168,10 @@ class MainPage extends Component {
                 loginRef={this.loginRef}
                 signupRef={this.signupRef}
                 handleSignUp={this.handleSignUp}
-                handleLogin={this.handleLogin}></NavBar>
+                handleLogin={this.handleLogin}
+                handleLogout={this.handleLogout}></NavBar>
         <> {this.state.pageContent} </>
+        <p id="status"></p> {/* status paragraph element for error messages */}
       </div>
     );
   }

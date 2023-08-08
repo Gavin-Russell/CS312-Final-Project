@@ -4,25 +4,45 @@ import SignUpPage from './SignUpPage'
 import ProfilePage from './ProfilePage'
 import BlogPostList from './BlogPostList'
 
-
 export class NavBar extends Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      filter: "All"
+      filter: "All",
+      logInButtons: <></>
     }
   }
 
-  // TODO: Implement filter
-  handleFilter = (event) => {
-    event.preventDefault()
+  // set login buttons when component mounts
+  componentDidMount() {
+    var logInButtons = <></>;
+    if(this.props.token === null) {
+      logInButtons = <>
+        <ul><button onClick={this.handleLogin}>Login</button></ul>
+        <ul><button onClick={this.handleSignUp}>Sign Up</button></ul>
+      </>;
+    } else {
+      logInButtons =
+      <>
+        <ul><button onClick={this.handleProfile}><small>Hello {this.props.token}!</small><br/>Profile</button></ul>
+        <ul><button onClick={this.handleLogout}>Logout</button></ul>
+      </>;
+    }
+
     this.setState({
-      filter: document.getElementById("Filter by: ").value
+      logInButtons: logInButtons
+    })
+  }
+
+  handleFilter = async (event) => {
+    event.preventDefault()
+    await this.setState({
+      filter: event.target.value
     })
 
-    this.props.updatePageContent(<BlogPostList filter={this.state.filter}></BlogPostList>)
+    this.props.updatePageContent(<BlogPostList key={this.state.filter} filter={this.state.filter} blogHistory={false} handleLogout={this.props.handleLogout}></BlogPostList>)
 
     console.log("Filtering by: " + this.state.filter)
   }
@@ -30,31 +50,51 @@ export class NavBar extends Component {
   handleLogin = (event) => {
     event.preventDefault()
     this.props.updatePageContent(<LoginPage ref={this.props.loginRef} handleLogin={this.props.handleLogin}></LoginPage>)
-    
-    // console.log("Login")
+
+    if(this.props.token !== null) {
+      this.setState({
+        logInButtons: <>
+          <ul><button onClick={this.handleProfile}>Profile</button></ul>
+          <ul><button onClick={this.handleLogout}>Logout</button></ul>
+        </>
+      })
+    }
   }
 
   handleSignUp = (event) => {
     event.preventDefault()
     this.props.updatePageContent(<SignUpPage ref={this.props.signupRef} handleSignUp={this.props.handleSignUp}></SignUpPage>)
 
-    // console.log("Sign Up")
+    if(this.props.token !== null) {
+      this.setState({
+        logInButtons: <>
+          <ul><button onClick={this.handleProfile}>Profile</button></ul>
+          <ul><button onClick={this.handleLogout}>Logout</button></ul>
+        </>
+      })
+    }
+  }
+
+  handleLogout = (event) => {
+
+    this.props.updatePageContent(<BlogPostList key={this.state.filter} filter={this.state.filter} handleLogout={this.props.handleLogout}></BlogPostList>)
+
+    // rerender nav
+    this.setState({
+      logInButtons: <>
+        <ul><button onClick={this.handleLogin}>Login</button></ul>
+        <ul><button onClick={this.handleSignUp}>Sign Up</button></ul>
+      </>
+    })
+
+    // console.log("Logout")
   }
 
   handleProfile = (event) => {
     event.preventDefault()
-    this.props.updatePageContent(<ProfilePage></ProfilePage>)
+    this.props.updatePageContent(<ProfilePage username={this.props.token}></ProfilePage>)
 
     // console.log("Profile")
-  }
-
-  // TODO: Implement logout
-  handleLogout = (event) => {
-    this.props.updateToken(null)
-
-    this.forceUpdate()
-
-    console.log("Logout")
   }
 
   render() {
@@ -65,26 +105,17 @@ export class NavBar extends Component {
 
           <div>
             <label htmlFor="Filter by: ">Filter by:</label>
-            <select name="Filter by: " id="Filter by: ">
+            <select name="Filter by: " id="Filter by: " onChange={this.handleFilter} >
               <option value="All">All</option>
-              <option value="Username">Username</option>
               <option value="Nature">Nature</option>
               <option value="City">City</option>
               <option value="Food">Food</option>
               <option value="Glasses">Glasses</option>
             </select>
-            <input type="button" value="Filter" onClick={this.handleFilter}></input>
+            {/* <input type="button" value="Filter" onClick={this.handleFilter}></input> */}
           </div>
 
-          {this.props.token === null ?
-            <>
-            <ul><button onClick={this.handleLogin}>Login</button></ul>
-            <ul><button onClick={this.handleSignUp}>Sign Up</button></ul>
-            </>:
-            <>
-            <ul><button onClick={this.handleProfile}>Profile</button></ul>
-            <ul><button onClick={this.handleLogout}>Logout</button></ul>
-            </>}
+          {this.state.logInButtons}
         </nav>
       </div>
     )
