@@ -34,7 +34,7 @@ export class BlogPostList extends Component {
     else {
       this.setState({
         Filter: "all",
-        PostList: await getPosts({"filter":"all"})
+        PostList: await getPosts({"filter":"all", "userName":this.props.username})
       })
     }
   }
@@ -104,6 +104,7 @@ export class BlogPostList extends Component {
                 id={post._id}
                 comments={post.comments}
                 handler={this.handlePostEdit}
+                deleteHandler={this.handleDeleteButton}
                 commentHandler={this.handleCommentEdit}
                 blogHistory={this.state.blogHistory}
               />

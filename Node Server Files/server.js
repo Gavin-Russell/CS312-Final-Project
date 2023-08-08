@@ -360,7 +360,8 @@ app.post('/getPosts', async function( request, response ) {
 		userName = request.body.userName
 	}
 
-	console.log("UserName: " + userName)
+	//console.log("UserName: " + userName)
+	//console.log(filter)
 
 	// console.log("FILTER: " + filter)
 	// console.log("USERNAME: " + userName)
@@ -397,7 +398,7 @@ app.post('/getPosts', async function( request, response ) {
 
 		// console.log(postsArray)
 		// filter by username if specified
-		if( userName !== null ) {
+		if( userName !== undefined ) {
 			// console.log("USERNAME " + userName)
 			postsArray = postsArray.filter( post => post.userName === userName );
 		}
@@ -453,13 +454,12 @@ app.post('/getPosts', async function( request, response ) {
 app.post('/updatePost', async function( request, response ) {
 	// initialize variables
 	var client, postsCollection
-
-	// console.log("UPDATE POST")
+	
 	// console.log(request.body)
 
 	// get input data
 	const id = request.body.id
-	const userName = request.body.userName
+	const userName = request.body.user
 	const title = request.body.title
 	const description = request.body.description
 	const tag = request.body.tag

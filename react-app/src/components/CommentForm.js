@@ -38,7 +38,7 @@ class CommentForm extends Component {
 
   render() {
     return (
-      <div className="commentForm">
+      <div className="commentsForm">
         <form onSubmit={this.submitHandler}>
           <h4>{this.state.User}</h4>
           <div className="addComment">
