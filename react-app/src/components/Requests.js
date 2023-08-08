@@ -32,3 +32,7 @@ export function deleteBlogPost(postId) {
 export function userComments(user) {
   return axios.post("http://localhost:3001/userComments", user);
 }
+
+export function deleteComment(postId, commentId) {
+  return axios.post("http://localhost:3001/deleteComment", {postId, commentId});
+}

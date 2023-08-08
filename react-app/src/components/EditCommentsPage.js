@@ -15,7 +15,7 @@ export class EditCommentsPage extends Component {
     this.setState({
       comments: (await userComments({userName: this.props.username})).data
     })
-    console.log(Array.isArray(this.state.comments))
+    // console.log(Array.isArray(this.state.comments))
   }
 
   render() {

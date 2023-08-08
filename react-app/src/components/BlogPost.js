@@ -3,15 +3,16 @@ import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 import { withCookies } from "react-cookie";
 import { updateBlogPost } from "./Requests";
+import { deleteComment } from "./Requests";
 
 export class BlogPost extends Component {
   constructor(props) {
     super(props);
-    console.log("constructing blog");
-    console.log("props: ", this.props);
+    // console.log("constructing blog");
+    // console.log("props: ", this.props);
     this.state = {
       User: this.props.data.user,
-      Number: this.props.number,
+      Id: this.props.id,
       Title: this.props.data.title,
       Tag: this.props.data.tag,
       Text: this.props.data.description,
@@ -21,11 +22,19 @@ export class BlogPost extends Component {
   }
 
   EditHandler = (formState) => {
-    this.props.handler(formState, this.state.Number);
+    this.props.handler(formState, this.state.Id);
   };
 
   CommentEditHandler = (formState, commentNum) => {
-    this.props.commentHandler(formState, commentNum, this.state.Number);
+    this.props.commentHandler(formState, commentNum, this.state.Id);
+  };
+
+  CommentDeleteHandler = async (commentNum) => {
+    let newComments = (await deleteComment(this.state.Id, commentNum)).data;
+
+    this.setState({
+      CommentList: newComments,
+    });
   };
 
   // How one would add a comment using the enter key
@@ -52,7 +61,7 @@ export class BlogPost extends Component {
 
     // update the database
     let updatedPost = {
-      id: this.state.Number,
+      id: this.state.Id,
       user: this.state.User,
       title: this.state.Title,
       tag: this.state.Tag,
@@ -87,6 +96,7 @@ export class BlogPost extends Component {
                 editing={false}
                 number={comment.number}
                 signedIn={userMatch}
+                deleteHandler={this.CommentDeleteHandler}
               />
             );
           })}

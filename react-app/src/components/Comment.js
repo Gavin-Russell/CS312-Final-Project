@@ -19,6 +19,11 @@ class Comment extends Component {
     this.setState({ Editing: true });
   };
 
+  handleDeleteButton = (event) => {
+    //delete the comment
+    this.props.deleteHandler(this.state.Number);
+  };
+
   handleSaveEdit = (formState) => {
     this.props.editHandler(formState, this.state.Number);
   };
@@ -42,7 +47,10 @@ class Comment extends Component {
           <h3 className="commentUser">{this.state.User}</h3>
           <p className="commentText">{this.state.Text}</p>
           {this.state.signedIn ? (
+            <div>
             <button onClick={this.handleEditButton}>Edit Comment</button>
+            <button onClick={this.handleDeleteButton}>Delete Comment</button>
+            </div>
           ) : null}
         </div>
       );

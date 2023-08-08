@@ -3,6 +3,7 @@ import EditProfilePage from './EditProfilePage.js'
 import EditCommentsPage from './EditCommentsPage'
 import BlogPostList from './BlogPostList'
 import NewBlogPost from './NewBlogPost'
+import { deleteComment } from './Requests'
 
 export class ProfileNavBar extends Component {
 
@@ -13,7 +14,7 @@ export class ProfileNavBar extends Component {
 
     handleEditComments = (event) => {
         event.preventDefault()
-        this.props.updatePageContent(<EditCommentsPage username={this.props.username}></EditCommentsPage>)
+        this.props.updatePageContent(<EditCommentsPage username={this.props.username} deleteHandler={this.deleteHandler}></EditCommentsPage>)
     }
 
     handleBlogPosts = (event) => {
@@ -26,6 +27,14 @@ export class ProfileNavBar extends Component {
         this.props.updatePageContent(<NewBlogPost></NewBlogPost>)
     }
   
+    deleteHandler = async (commentNum) => {
+        let newComments = (await deleteComment(this.state.Number, commentNum)).data;
+
+        this.setState({
+          CommentList: newComments,
+        });
+    }
+
     render() {
     return (
         <div>

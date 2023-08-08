@@ -189,7 +189,7 @@ app.post('/logIn', async function( request, response ) {
 
 app.post('/editProfile', async function( request, response ) {
 	// initialize variables
-	console.log("EDIT PROFILE")
+	// console.log("EDIT PROFILE")
 	
 	var client, profilesCollection, profileList
 
@@ -266,7 +266,7 @@ app.post('/editProfile', async function( request, response ) {
 			}
 
 			// return success
-			console.log("SUCCESS")
+			// console.log("SUCCESS")
 
 			response
 				.status(200)
@@ -388,14 +388,14 @@ app.post('/getPosts', async function( request, response ) {
 		//get all posts
 		postsArray = await postsCollection.find().toArray()
 
-		console.log(postsArray)
+		// console.log(postsArray)
 		// filter by username if specified
 		if( userName !== undefined ) {
 			console.log("USERNAME " + userName)
 			postsArray = postsArray.filter( post => post.userName === userName );
 		}
 		
-		console.log(postsArray)
+		// console.log(postsArray)
 		//close the connection
         client.close()
 		
@@ -447,8 +447,8 @@ app.post('/updatePost', async function( request, response ) {
 	// initialize variables
 	var client, postsCollection
 
-	console.log("UPDATE POST")
-	console.log(request.body)
+	// console.log("UPDATE POST")
+	// console.log(request.body)
 
 	// get input data
 	const id = request.body.id
@@ -614,6 +614,66 @@ app.post('/userComments', async function( request, response ) {
 	response
 		.status(200)
 		.send( commentsArray )
+
+	return true
+})
+
+app.post('/deleteComment', async function( request, response ) {
+	//initialize variables
+	var client, post, commentsList, newCommentsList, postsCollection
+
+	// get input data
+	// console.log(request.body)
+	const postId = request.body.postId
+	const commentId = request.body.commentId
+
+	try {
+		//try to
+
+		//connect to client
+		client = new mongo.MongoClient(clientAddress);
+
+		//connect to admin database to start
+		postsCollection = await client.db("Posts").collection("all")
+
+	} catch(error) {
+		//otherwise there was a problem
+
+		//send error response
+		response
+			.status(502)
+			.send( {message: `There was an error connecting to the database. ERROR:    ${error}`} )
+
+		//close the connection
+		client.close()
+
+		//end the function early
+		return false
+	}
+
+	// get blog post by id
+	// console.log(postId)
+	post = await postsCollection.findOne({_id: new mongo.ObjectId(postId)})
+
+	// get the comments list
+	commentsList = post.comments
+
+	// remove the comment
+	newCommentsList = commentsList.filter( comment => comment.number !== commentId )
+
+	// update the post
+	await postsCollection.updateOne(
+		{_id: new mongo.ObjectId(postId)},
+		{$set: {comments: newCommentsList}}
+	)
+
+	//close the connection
+	client.close()
+
+	// return success
+	response
+		.status(200)
+		.send( newCommentsList )
 
 	return true
 })
