@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import LogIn from './Requests'
 
 class LoginPage extends Component {
 

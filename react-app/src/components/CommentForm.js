@@ -40,22 +40,24 @@ class CommentForm extends Component {
       <div className="commentForm">
         <form onSubmit={this.submitHandler}>
           <h4>{this.state.User}</h4>
-          <label>Comment</label>
-          <input
-            type="textarea"
-            placeholder="New Comment"
-            value={this.state.Text}
-            onChange={this.handleTextChange}>
-          </input>
-          {this.props.editing ? (
-            <>
-            <input type="button" value="Cancel" onClick={this.props.handler}></input>
-            <input type="submit" value="Save" onClick={this.props.handler}></input>
-            </>
-          ) : 
-            <input type="submit" value="Comment"></input>
-          }
+          <div className="addComment">
+            <input
+              type="textarea"
+              placeholder="New Comment"
+              value={this.state.Text}
+              onChange={this.handleTextChange}>
+            </input>
+          
+            {this.props.editing ? (
+              <>
+              <input type="button" value="Cancel" onClick={this.props.handler}></input>
+              <input type="submit" value="Save" onClick={this.props.handler}></input>
+              </>
+            ) : 
+              <input type="submit" value="Comment"></input>
+            }
 
+          </div>
           <p className="status"></p>
         </form>
       </div>
