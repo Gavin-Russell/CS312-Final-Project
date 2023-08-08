@@ -63,9 +63,34 @@ export class BlogPostList extends Component {
     this.setState({ PostList: posts });
   };
 
-  handleDeleteButton = (blog_id) => {
+  handleCommentEdit = (commentState, commentNum, postNum) => {
+    //get the new data
+    let newComments = this.state.PostList[postNum].comments;
+    newComments = JSON.parse(newComments);
+    const commentData = {
+      user: commentState.User,
+      text: commentState.Text,
+      number: commentState.Number,
+    };
+
+    newComments[commentNum] = commentData;
+    newComments = JSON.stringify(newComments);
+    let posts = this.state.PostList;
+    posts[postNum].comments = newComments;
+
+    updateBlogPost(posts[postNum]);
+
+    this.setState({ PostList: posts });
+  };
+
+  handleDeleteButton = async (blog_id) => {
     //delete the post
-    deleteBlogPost(blog_id);
+    await deleteBlogPost(blog_id);
+
+    this.setState({
+      Filter: "all",
+      PostList: await getPosts({"filter":"all", "userName":this.props.username})
+    })
   }
 
   render() {

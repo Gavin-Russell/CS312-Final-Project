@@ -23,7 +23,7 @@ export class BlogPost extends Component {
   }
 
   DeleteHandler = () => {
-    this.props.deleteHandler(this.state.Id)
+    this.props.deleteHandler({"id":this.state.Id})
   }
 
   CommentEditHandler = (formState, commentNum) => {

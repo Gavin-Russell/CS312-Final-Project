@@ -512,7 +512,7 @@ app.post('/updatePost', async function( request, response ) {
 })
 
 
-app.post('/deleteBlogPost', async function( request, response ) {
+app.post('/deletePost', async function( request, response ) {
 
 	//initialize variables
 	var client, postsCollection
