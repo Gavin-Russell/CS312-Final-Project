@@ -17,7 +17,7 @@ class Comment extends Component {
   handleEditButton = (event) => {
     //set the editing state to re render the editor component
     this.setState({ Editing: true });
-    
+
   };
 
   handleDeleteButton = (event) => {
@@ -59,7 +59,6 @@ class Comment extends Component {
           <span className="commentText">{this.state.Text}</span>
           {this.state.signedIn ? (
             <div>
-            <button onClick={this.handleEditButton}>Edit Comment</button>
             <button onClick={this.handleDeleteButton}>Delete Comment</button>
             </div>
           ) : null}

@@ -34,13 +34,17 @@ export class BlogPostList extends Component {
     else {
       this.setState({
         Filter: "all",
-        PostList: await getPosts({"filter":"all", "userName":this.props.username})
+        PostList: await getPosts({"filter":"all", "userName":this.props.username}),
       })
     }
   }
 
-  handlePostEdit = (formState, postNum) => {
+  handlePostEdit = (formState, postId) => {
     //get the new post data
+    let postNum = this.state.PostList.findIndex((post) => {
+      return post._id === postId;
+    });
+
     const newData = {
       user: formState.User,
       title: formState.Title,
@@ -52,29 +56,10 @@ export class BlogPostList extends Component {
     updateBlogPost(newData);
     //get the current post list
     let posts = this.state.PostList;
+
     //add to it
     posts[postNum] = newData;
     //put it back in the state
-    this.setState({ PostList: posts });
-  };
-
-  handleCommentEdit = (commentState, commentNum, postNum) => {
-    //get the new data
-    let newComments = this.state.PostList[postNum].comments;
-    newComments = JSON.parse(newComments);
-    const commentData = {
-      user: commentState.User,
-      text: commentState.Text,
-      number: commentState.Number,
-    };
-
-    newComments[commentNum] = commentData;
-    newComments = JSON.stringify(newComments);
-    let posts = this.state.PostList;
-    posts[postNum].comments = newComments;
-
-    updateBlogPost(posts[postNum]);
-
     this.setState({ PostList: posts });
   };
 
@@ -83,14 +68,9 @@ export class BlogPostList extends Component {
     deleteBlogPost(blog_id);
   }
 
-  handleEditButton = (event) => {
-    //set the editing state to re render the editor component
-    this.setState({ blogEditing: true });
-  }
-
   render() {
     let pageContent = <h1>Nothing to show here</h1>;
-    if (this.state.PostList !== null) {
+    if (this.state.PostList !== null && this.state.PostList.length > 0 && this.state.PostList !== undefined) {
       pageContent = (
         <div>
           <h1>
@@ -104,9 +84,11 @@ export class BlogPostList extends Component {
                 id={post._id}
                 comments={post.comments}
                 handler={this.handlePostEdit}
+                updateHandler={this.handleEditButton}
                 deleteHandler={this.handleDeleteButton}
                 commentHandler={this.handleCommentEdit}
                 blogHistory={this.state.blogHistory}
+                blogEditing={this.state.blogEditing}
               />
             );
           })}
