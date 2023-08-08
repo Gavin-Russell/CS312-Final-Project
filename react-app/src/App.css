@@ -90,7 +90,7 @@ form label {
 }
 
 .tag {
-  display: inline;
+  display: block;
   font-size: 20px;
   width: 75px;
   text-align: right;

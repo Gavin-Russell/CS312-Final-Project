@@ -89,9 +89,9 @@ export class BlogPost extends Component {
 
           <br></br>
           <br></br>
-
-          <p className="description">{this.state.Text}</p>
           <p className="tag">{this.state.Tag ? " #" + this.state.Tag : null}</p>
+          <p className="description">{this.state.Text}</p>
+
 
           <br></br>
         </>
