@@ -24,9 +24,15 @@ export class BlogPost extends Component {
 
   EditHandler = (formState) => {
     this.props.handler(formState, this.state.Id);
-  };
+  }
+
+  DeleteHandler = () => {
+    this.props.deleteHandler(this.state.Id)
+  }
 
   CommentEditHandler = (formState, commentNum) => {
+    
+
     this.props.commentHandler(formState, commentNum, this.state.Id);
   };
 
@@ -74,6 +80,7 @@ export class BlogPost extends Component {
   }
 
   render() {
+    console.log(this.state)
     if (this.props == null) {
       return null;
     }
@@ -82,10 +89,16 @@ export class BlogPost extends Component {
         {!this.state.blogEditing ? (
         <>
           <hr></hr>
-          <h3 className="username">User: {this.state.User}</h3>
-          <h2 className="title">{this.state.Title}</h2>
+          <h3 className="username">{this.state.User}: </h3>
+          <h2 className="title">"{this.state.Title}"</h2>
+
+          <br></br>
+          <br></br>
+
           <p className="description">{this.state.Text}</p>
-          <p className="tag">{this.state.Tag ? "#" + this.state.Tag : null}</p>
+          <p className="tag">{this.state.Tag ? " #" + this.state.Tag : null}</p>
+
+          <br></br>
         </>
         ) : (
         <>
@@ -100,7 +113,7 @@ export class BlogPost extends Component {
               value={this.state.Title}
               onChange={this.handleChange}
             ></input>
-
+          
             <label htmlFor="content">Content</label>
             <textarea
               id="content"
@@ -112,11 +125,11 @@ export class BlogPost extends Component {
             <input type="submit" value="Update"></input>
             <input type="button" value="Cancel" onClick={this.handleCancel}></input>
           </form>
-          <p className="tag">{this.state.Tag ? "#" + this.state.Tag : null}</p>
+          <p className="tag">{this.state.Tag ? " #" + this.state.Tag : null}</p>
         </>
         )}
 
-        <CommentForm handler={this.handleNewComment} />
+        <div> {this.state.blogHistory ? <div> <br></br> <button onClick={this.DeleteHandler}>Delete Post</button><button onClick={this.EditHandler}>Edit Post</button></div> : <CommentForm handler={this.handleNewComment}/>} </div>
 
         <div> 
           <h2><u>Comments</u></h2>

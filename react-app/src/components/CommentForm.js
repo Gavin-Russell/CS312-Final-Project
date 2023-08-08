@@ -20,7 +20,9 @@ class CommentForm extends Component {
   handleTextChange = (event) => {
     this.setState({ Text: event.target.value });
 
-    event.target.parentNode.querySelector(".status").innerHTML = "";
+    if(event.target.parentNode.querySelector(".status") !== null) {
+      event.target.parentNode.querySelector(".status").innerHTML = "";
+    }
   };
 
   submitHandler = (event) => {
