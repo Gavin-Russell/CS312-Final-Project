@@ -27,12 +27,10 @@ export class BlogPost extends Component {
   }
 
   DeleteHandler = () => {
-    this.props.deleteHandler(this.state.Id)
+    this.props.deleteHandler({"id":this.state.Id})
   }
 
   CommentEditHandler = (formState, commentNum) => {
-    
-
     this.props.commentHandler(formState, commentNum, this.state.Id);
   };
 
@@ -129,7 +127,7 @@ export class BlogPost extends Component {
         </>
         )}
 
-        <div> {this.state.blogHistory ? <div> <br></br> <button onClick={this.DeleteHandler}>Delete Post</button><button onClick={this.EditHandler}>Edit Post</button></div> : <CommentForm handler={this.handleNewComment}/>} </div>
+        <div> {this.state.blogHistory ? <div> <br></br> <button onClick={this.DeleteHandler}>Delete Post</button></div> : <CommentForm handler={this.handleNewComment}/>} </div>
 
         <div> 
           <h2><u>Comments</u></h2>

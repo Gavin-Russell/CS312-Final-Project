@@ -78,9 +78,14 @@ export class BlogPostList extends Component {
     this.setState({ PostList: posts });
   };
 
-  handleDeleteButton = (blog_id) => {
+  handleDeleteButton = async (blog_id) => {
     //delete the post
-    deleteBlogPost(blog_id);
+    await deleteBlogPost(blog_id);
+
+    this.setState({
+      Filter: "all",
+      PostList: await getPosts({"filter":"all", "userName":this.props.username})
+    })
   }
 
   handleEditButton = (event) => {
