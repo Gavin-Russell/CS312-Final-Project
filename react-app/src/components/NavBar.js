@@ -24,7 +24,8 @@ export class NavBar extends Component {
         <ul><button onClick={this.handleSignUp}>Sign Up</button></ul>
       </>;
     } else {
-      logInButtons = <>
+      logInButtons =
+      <>
         <ul><button onClick={this.handleProfile}><small>Hello {this.props.token}!</small><br/>Profile</button></ul>
         <ul><button onClick={this.handleLogout}>Logout</button></ul>
       </>;
@@ -41,7 +42,7 @@ export class NavBar extends Component {
       filter: event.target.value
     })
 
-    this.props.updatePageContent(<BlogPostList key={this.state.filter} filter={this.state.filter}></BlogPostList>)
+    this.props.updatePageContent(<BlogPostList key={this.state.filter} filter={this.state.filter} blogHistory={false} handleLogout={this.props.handleLogout}></BlogPostList>)
 
     console.log("Filtering by: " + this.state.filter)
   }

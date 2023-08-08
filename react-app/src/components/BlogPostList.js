@@ -9,6 +9,7 @@ export class BlogPostList extends Component {
     this.state = {
       Filter: this.props.filter,
       PostList: [],
+      blogHistory: this.props.blogHistory
     };
   }
 
@@ -87,6 +88,7 @@ export class BlogPostList extends Component {
           </h1>
           {this.state.PostList.map((post) => {
             return (
+              <>
               <BlogPost
                 key={this.props.filter}
                 data={post}
@@ -95,6 +97,14 @@ export class BlogPostList extends Component {
                 handler={this.handlePostEdit}
                 commentHandler={this.handleCommentEdit}
               />
+              {this.state.blogHistory ? 
+              <>
+              <button onClick={this.handleDeleteButton}>Delete Post</button>
+              <button onClick={this.handleEditButton}>Edit Post</button>
+              </>
+              : null
+              }
+              </>
             );
           })}
         </div>
