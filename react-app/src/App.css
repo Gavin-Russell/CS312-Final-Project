@@ -94,7 +94,7 @@ form label {
   font-size: 20px;
   width: 75px;
   text-align: right;
-  margin-right: 20px;
+  margin: 10px auto;
   color: rgb(0, 150, 205)
 }
 
