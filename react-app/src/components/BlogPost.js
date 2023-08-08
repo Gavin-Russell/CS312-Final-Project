@@ -11,13 +11,15 @@ export class BlogPost extends Component {
     // console.log("constructing blog");
     // console.log("props: ", this.props);
     this.state = {
-      User: this.props.data.user,
+      User: this.props.data.userName,
       Id: this.props.id,
       Title: this.props.data.title,
       Tag: this.props.data.tag,
       Text: this.props.data.description,
       CommentList: this.props.comments,
       currUser: this.props.cookies.get("token"),
+      blogHistory: this.props.blogHistory,
+      blogEditing: false,
     };
   }
 
@@ -78,11 +80,42 @@ export class BlogPost extends Component {
     }
     return (
       <div className="blog post">
-        <hr></hr>
-        <h3 className="username">User: {this.state.User}</h3>
-        <h2 className="title">{this.state.Title}</h2>
-        <p className="description">{this.state.Text}</p>
-        <p className="tag">{this.state.Tag ? "#" + this.state.Tag : null}</p>
+        {!this.state.blogEditing ? (
+        <>
+          <hr></hr>
+          <h3 className="username">User: {this.state.User}</h3>
+          <h2 className="title">{this.state.Title}</h2>
+          <p className="description">{this.state.Text}</p>
+          <p className="tag">{this.state.Tag ? "#" + this.state.Tag : null}</p>
+        </>
+        ) : (
+        <>
+          <hr></hr>
+          <form onSubmit={this.handleUpdate}>
+            <h3 className="username">User: {this.state.User}</h3>
+            <label htmlFor="title">Title</label>
+            <input
+              type="text"
+              id="title"
+              name="Title"
+              value={this.state.Title}
+              onChange={this.handleChange}
+            ></input>
+
+            <label htmlFor="content">Content</label>
+            <textarea
+              id="content"
+              name="Text"
+              value={this.state.Text}
+              onChange={this.handleChange}
+            ></textarea>
+
+            <input type="submit" value="Update"></input>
+            <input type="button" value="Cancel" onClick={this.handleCancel}></input>
+          </form>
+          <p className="tag">{this.state.Tag ? "#" + this.state.Tag : null}</p>
+        </>
+        )}
 
         <CommentForm handler={this.handleNewComment} />
 

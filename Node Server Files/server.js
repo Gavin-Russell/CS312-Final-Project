@@ -353,7 +353,14 @@ app.post('/getPosts', async function( request, response ) {
 
 	// parse filter and username
 	const filter = request.body.filter.toLowerCase()
-	const userName = request.body.userName
+
+	let userName
+
+	if( typeof request.body.userName === "string" ) {
+		userName = request.body.userName
+	}
+
+	console.log("UserName: " + userName)
 
 	// console.log("FILTER: " + filter)
 	// console.log("USERNAME: " + userName)
@@ -390,8 +397,8 @@ app.post('/getPosts', async function( request, response ) {
 
 		// console.log(postsArray)
 		// filter by username if specified
-		if( userName !== undefined ) {
-			console.log("USERNAME " + userName)
+		if( userName !== null ) {
+			// console.log("USERNAME " + userName)
 			postsArray = postsArray.filter( post => post.userName === userName );
 		}
 		

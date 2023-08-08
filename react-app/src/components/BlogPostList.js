@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getPosts, updateBlogPost } from "./Requests";
+import { getPosts, updateBlogPost, deleteBlogPost } from "./Requests";
 import BlogPost from "./BlogPost";
 
 export class BlogPostList extends Component {
@@ -9,7 +9,7 @@ export class BlogPostList extends Component {
     this.state = {
       Filter: this.props.filter,
       PostList: [],
-      blogHistory: this.props.blogHistory
+      blogHistory: this.props.blogHistory,
     };
   }
 
@@ -78,6 +78,16 @@ export class BlogPostList extends Component {
     this.setState({ PostList: posts });
   };
 
+  handleDeleteButton = (blog_id) => {
+    //delete the post
+    deleteBlogPost(blog_id);
+  }
+
+  handleEditButton = (event) => {
+    //set the editing state to re render the editor component
+    this.setState({ blogEditing: true });
+  }
+
   render() {
     let pageContent = <h1>Nothing to show here</h1>;
     if (this.state.PostList !== null) {
@@ -88,7 +98,6 @@ export class BlogPostList extends Component {
           </h1>
           {this.state.PostList.map((post) => {
             return (
-              <>
               <BlogPost
                 key={this.props.filter}
                 data={post}
@@ -96,15 +105,8 @@ export class BlogPostList extends Component {
                 comments={post.comments}
                 handler={this.handlePostEdit}
                 commentHandler={this.handleCommentEdit}
+                blogHistory={this.state.blogHistory}
               />
-              {this.state.blogHistory ? 
-              <>
-              <button onClick={this.handleDeleteButton}>Delete Post</button>
-              <button onClick={this.handleEditButton}>Edit Post</button>
-              </>
-              : null
-              }
-              </>
             );
           })}
         </div>
