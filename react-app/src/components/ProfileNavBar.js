@@ -13,7 +13,7 @@ export class ProfileNavBar extends Component {
 
     handleBlogPosts = (event) => {
         event.preventDefault()
-        this.props.updatePageContent(<BlogPostList filter="all" username={this.props.username}></BlogPostList>)
+        this.props.updatePageContent(<BlogPostList filter="all" username={this.props.username} blogHistory={true}></BlogPostList>)
     }
 
     handleNewBlogPost = (event) => {
