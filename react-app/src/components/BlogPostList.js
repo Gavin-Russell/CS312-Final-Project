@@ -34,7 +34,7 @@ export class BlogPostList extends Component {
     else {
       this.setState({
         Filter: "all",
-        PostList: await getPosts({"filter":"all", "userName":`${this.props.username}`})
+        PostList: await getPosts({"filter":"all"})
       })
     }
   }

@@ -44,8 +44,8 @@ class Comment extends Component {
     } else {
       pageContent = (
         <div className="Comment">
-          <h3 className="commentUser">{this.state.User}</h3>
-          <p className="commentText">{this.state.Text}</p>
+          <span className="commentUser"><strong>{this.state.User}: </strong></span>
+          <span className="commentText">{this.state.Text}</span>
           {this.state.signedIn ? (
             <div>
             <button onClick={this.handleEditButton}>Edit Comment</button>

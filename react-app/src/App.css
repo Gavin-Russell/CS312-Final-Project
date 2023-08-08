@@ -90,10 +90,14 @@ form label {
 }
 
 .tag {
-  display: inline-block;
+  display: inline;
   font-size: 20px;
   width: 75px;
   text-align: right;
   margin-right: 20px;
   color: rgb(0, 150, 205)
+}
+
+.title, .username, .description, .addComment{
+  display: inline;
 }

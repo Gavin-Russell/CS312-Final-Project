@@ -8,10 +8,9 @@ import { deleteComment } from "./Requests";
 export class BlogPost extends Component {
   constructor(props) {
     super(props);
-    // console.log("constructing blog");
-    // console.log("props: ", this.props);
+
     this.state = {
-      User: this.props.data.user,
+      User: this.props.data.userName,
       Id: this.props.id,
       Title: this.props.data.title,
       Tag: this.props.data.tag,
@@ -79,14 +78,24 @@ export class BlogPost extends Component {
     return (
       <div className="blog post">
         <hr></hr>
-        <h3 className="username">User: {this.state.User}</h3>
-        <h2 className="title">{this.state.Title}</h2>
+        <div className="title" >
+          <h2 className="username">{this.state.User}: </h2>
+          <h2 className="title">"{this.state.Title}"</h2>
+        </div>
+
+        <br></br>
+        <br></br>
+
         <p className="description">{this.state.Text}</p>
-        <p className="tag">{this.state.Tag ? "#" + this.state.Tag : null}</p>
+        <div className="tag">{this.state.Tag ? " #" + this.state.Tag : null}</div>
+
+        <br></br>
+        <br></br>
 
         <CommentForm handler={this.handleNewComment} />
 
-        <div>
+        <div> 
+          <h2><u>Comments</u></h2>
           {this.state.CommentList.map((comment) => {
             let userMatch = this.state.currUser === comment.User;
             return (
