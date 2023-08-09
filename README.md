@@ -142,3 +142,47 @@ Along with navigation each component that can be navigated to/interacted with by
 ## Challenges and Moving Forward
 During Phase I development the biggest challenge faced by the team was creating references to child components. These were required to allow a parent component, MainPage, to access the state of child components, SignUp and LoginPage. This was something that was not covered during the course of the class so it required additional research to do.
 Moving forward the team will need to modify the front end components to update their content on the server using an API. This will allow content to be stored in the database long term. The database, server, and API will need to be fleshed out to intake these requests appropriately. Although the team originally intended to allow users to edit their comments, initial work with the database showed this would require a much more complicated architecture to properly handle updates. In order to keep the time and scope of the project to a realistic scale this feature was dropped from development.
+
+
+
+# Phase 2 Report
+
+## Deliverables:
+Below are the tasks accomplished during the Phase II development cycle of this project.
+
+
+## Backend Implementation Work
+In Phase 1, the backend work included login, signup and cookie functionality. In Phase 2, we implemented all post functionality, such as adding and deleting posts, displaying the posts on the main page with different filletring options such as by tag or showing all the posts, allowing the user to see their profile page and edit their info, displaying the users post history in their profile, and adding comment functionality such as adding and deleting comments. Adding and deleting the posts were simple, we created a new database for posts and when the user filled out the create post form in their profile it was added to the database. When a user deletes a post, the ID of the post is sent to the database for it to be deleted. Both of these actions were done by a http request. Displaying and filtering were just as simple. When a user loads on the main page, a request is sent to the server which gets all posts in the database and sends them back as a list to the webpage. Filtering is the same process, but except for finding all posts it finds all posts with a specific filter. The same method was again done for displaying the users post history; filtering by username. The profile page was implemented which simply takes the cookie token name which is their username and fetches their info in the database. The user can then edit their profile info on the profile page. Comment functionality was implemented on the back end along with the update functionality for blog posts. This is because the database stores the comments as a field of the post to maintain association between post and comment. When a new comment is created, the server will receive a request to update the post that holds the comment. The request holds all the data for the updated post, meaning that the server can update the post document in the mongo database with the new data from the request. After processing the request, the database will have the updated post with an additional comment, and a success message and status code is sent back to the frontend client.
+
+
+## Frontend Implementation Work
+While Phase I of the project focused on setting up the website’s navigation and skeletal structure, Phase II focused on implementing the features laid out by this structure. After Phase II user’s are able to edit their personal profile information and update it in the server. They can also create new blog posts and assign them a tag of their choosing (shown below). All created posts are rendered on the home page by default. Alternatively, the posts can be filtered so that only posts relating to a tag are rendered.
+
+<img title="Image 1" src="/images/Image 1.png">
+
+One feature present in Phase I that was dropped during Phase II development was filtering posts by username on the home page. It was decided that this didn’t make much sense in the spirit of the website. However, the same filtering technique was used to display user’s post history in their profile page. This page was where users could read exclusively their own posts, along with any comments attached to the post. This is also where they could choose to delete their posts as desired.
+
+<img title="Image 2" src="/images/Image 2.png">
+
+This phase also included creating capabilities for comments, giving the users the ability to add on comments beneath any post (shown below).
+
+<img title="Image 3" src="/images/Image 3.png">
+
+The user can click the comment button once they are happy with the text, and the comment will be added as part of the post data, and rendered with it onto the page.
+
+<img title="Image 4" src="/images/Image 4.png">
+
+Now in the comments section the user can see their comment displayed below the post.
+The comment functionality is achieved by mapping through a list of comment data objects that are in the post’s state data. In the map we render a comment component
+
+
+## Challenges and Moving Forward
+Phase I of this project primarily consisted of technical challenges for the team while they learned how to integrate a complete MERN system properly. Phase II, on the other hand, taught the team the necessity of proper planning and standards prior to diving into implementation using such a system. The team found that they all went about implementing the same features on the site in wildly different ways. While each methodology worked well enough, they also led to a great deal of time and energy being wasted trying to make three separate visions for the React structure compatible. In some cases the team was able to overcome this challenge by sitting down and talking through the problems/bugs until a working solution emerged. In other cases however, the team found they’re implementations to be too drastically different and they weren’t able to fully implement some features on the given timeline. The biggest of these features being the ability for users to edit comments and blog posts.
+
+If this project were to continue, including user editing abilities would be the next step in the process. First however, the team would sit down together and create much more strict and comprehensive guidelines for how they would approach building the site. These guidelines would include a more thoroughly drawn out system architecture than was originally created as well as more specific details for coding conventions including variable names and commenting.
+
+
+
+
+
+
