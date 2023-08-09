@@ -20,6 +20,12 @@ nav {
   margin: 2px 4px;
 }
 
+p {
+  margin: 0;
+  padding: 0 200px;
+  width: 90%;
+}
+
 hr {
   border: 0;
   height: 1px;
