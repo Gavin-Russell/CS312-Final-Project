@@ -5,7 +5,9 @@ Repository for the final project of cs312
 
 ## Starting the Node Server
 
-To run the server file, express, mongodb and cors need to be installed
+To run the server file, node, express, mongodb and cors need to be installed
+
+### Download Node: https://nodejs.org/en
 
 ### Download Mongodb: https://www.mongodb.com/try/download/community
 
